@@ -1,0 +1,76 @@
+"Rank","Name","Industry","Revenue(USD millions)","Revenue growth","Employees","Headquarters","ESG"
+1,"Walmart","Retail","523,964","1.9%","2,200,000","Bentonville, Arkansas",28.9
+2,"Amazon","Retail","280,522","20.5%","798,000","Seattle, Washington",27.4
+3,"Exxon Mobil","Oil and Gas","264,938","8.7%","74,900","Irving, Texas",32.3
+4,"Apple","Electronics","260,174","2.0%","137,000","Cupertino, California",16.6
+5,"CVS Health","Healthcare","256,776","32.0%","290,000","Woonsocket, Rhode Island",21
+6,"Berkshire Hathaway","Conglomerate","254,616","2.7%","391,500","Omaha, Nebraska",17.1
+7,"UnitedHealth Group","Healthcare","242,155","7.0%","325,000","Minnetonka, Minnesota",21.2
+8,"McKesson","Healthcare","214,319","2.9%","70,000","Irving, Texas",19.8
+10,"AmerisourceBergen","Pharmaceuticals","179,589","6.9%","21,500","Chesterbrook, Pennsylvania",12.9
+11,"Alphabet","Technology","161,857","18.3%","118,899","Mountain View, California",22.8
+12,"Ford","Automotive","155,900","2.8%","190,000","Dearborn, Michigan",30
+13,"Cigna","Health Insurance","153,566","215.7%","73,700","Bloomfield, Connecticut",15.1
+14,"Costco","Retail","152,703","7.9%","201,500","Issaquah, Washington",22.3
+15,"Chevron","Oil and Gas","146,516","11.9%","48,200","San Ramon, California",40.3
+16,"Cardinal Health","Healthcare","145,534","6.4%","49,500","Dublin, Ohio",15.7
+17,"JPMorgan Chase","Financials","142,422","8.4%","256,981","New York City, New York",24.8
+18,"General Motors","Automotive","137,237","6.7%","164,000","Detroit, Michigan",30
+19,"Walgreens Boots Alliance","Pharmaceuticals","136,866","4.1%","287,000","Deerfield, Illinois",17.3
+20,"Verizon","Telecommunications","131,868","0.8%","135,000","New York City, New York",18.1
+21,"Microsoft","Technology","125,843","14.0%","144,000","Redmond, Washington",14.9
+22,"Marathon Petroleum","Oil and gas","124,813","28.5%","60,910","Findlay, Ohio",28.7
+23,"Kroger","Retail","122,286","0.9%","435,000","Cincinnati, Ohio",20.4
+25,"Bank of America","Financials","113,589","2.7%","208,131","Charlotte, North Carolina",26.3
+26,"The Home Depot","Retail","110,225","1.9%","415,700","Atlanta, Georgia",11.5
+27,"Phillips 66","Oil and gas","109,559","4.1%","14,500","Houston, Texas",31
+28,"Comcast","Telecommunications","108,942","15.3%","190,000","Philadelphia, Pennsylvania",19.7
+29,"Anthem","Healthcare","104,213","13.1%","70,600","Indianapolis, Indiana",13.3
+30,"Wells Fargo","Financials","103,915","2.8%","259,800","San Francisco, California",30.8
+31,"Citigroup","Financials","103,449","6.5%","200,000","New York City, New York",26.3
+32,"Valero","Oil and gas","102,729","7.8%","10,222","San Antonio, Texas",37.3
+33,"General Electric","Conglomerate","95,214","20.8%","205,000","Boston, Massachusetts",45.9
+34,"Dell","Technology","92,154","1.7%","165,000","Round Rock, Texas",16
+35,"Johnson & Johnson","Pharmaceuticals","82,059","0.6%","132,200","New Brunswick, New Jersey",32.8
+37,"Target","Retail","78,112","3.7%","368,000","Minneapolis, Minnesota",15.4
+38,"IBM","Technology","77,147","3.1%","383,800","Armonk, New York",17.7
+39,"United Technologies","Conglomerate","77,046","15.9%","243,200","Waltham, Massachusetts",28.6
+40,"Boeing","Aerospace and defense","76,559","24.3%","161,100","Chicago, Illinois",37
+42,"Centene","Healthcare","74,639","24.2%","56,600","St. Louis, Missouri",22.7
+43,"United Parcel Service","Transportation","74,094","3.1%","377,640","Atlanta, Georgia",21.4
+44,"Lowe's","Retail","72,148","1.2%","260,000","Mooresville, North Carolina",12.6
+45,"Intel","Technology","71,965","1.6%","110,800","Santa Clara, California",15.8
+46,"Facebook","Technology","70,697","26.6%","44,942","Menlo Park, California",31.4
+47,"FedEx","Transportation","69,693","6.5%","389,500","Memphis, Tennessee",21.3
+48,"MetLife","Financials","69,620","2.5%","49,000","New York City, New York",18.6
+49,"Walt Disney","Media","69,570","17.1%","223,000","Burbank, California",16.2
+50,"Procter & Gamble","Retail","67,684","1.3%","97,000","Cincinnati, Ohio",24.7
+51,"PepsiCo","Beverage","67,161","3.7%","267,000","Purchase, New York",17.5
+52,"Humana","Health Insurance","64,888","14.0%","46,000","Louisville, Kentucky",23.2
+53,"Prudential Financial","Financials","64,807","2.9%","51,511","Newark, New Jersey",20.6
+54,"Archer-Daniels-Midland","Food production","64,656","0.5%","38,100","Chicago, Illinois",34.2
+56,"Sysco","Food Service","60,114","2.4%","69,000","Houston, Texas",12.7
+57,"Lockheed Martin","Aerospace and Defense","59,812","11.3%","110,000","Bethesda, Maryland",28.3
+58,"HP Inc","Technology","58,756","0.5%","56,000","Palo Alto, California",12.3
+60,"Goldman Sachs","Financials","53,922","2.7%","38,300","New York City, New York",28.3
+61,"Morgan Stanley","Financials","53,823","7.2%","60,431","New York City, New York",22.6
+62,"Caterpillar","Machinery","53,800","1.7%","102,300","Deerfield, Illinois",39.4
+63,"Cisco","Telecom Hardware Manufacturing","51,904","5.2%","75,900","San Jose, California",12.7
+64,"Pfizer","Pharmaceuiticals Manufacturing","51,750","3.5%","88,300","New York City, New York",29.6
+65,"HCA Healthcare","Healthcare","51,336","10.0%","245,000","Nashville, Tennessee",26.6
+66,"AIG","Insurance","49,746","5.0%","46,000","New York City, New York",30.8
+67,"American Express","Financial","47,020","8.6%","64,500","New York City, New York",19.8
+68,"Delta Air Lines","Airlines","47,007","5.8%","91,224","Atlanta, Georgia",23.8
+69,"Merck & Co.","Pharmaceuticals Manufacturing","46,840","10.7%","71,000","Kenilworth, New Jersey",22.6
+70,"American Airlines","Airlines","45,768","2.8%","133,700","Fort Worth, Texas",30.6
+71,"Charter Communications","Telecommunications","45,764","4.9%","95,100","Stamford, Connecticut",20.4
+72,"Allstate","Insurance","44,675","12.2%","46,035","Northfield Township, Cook County, Illinois",22.8
+73,"New York Life","Insurance","44,117","1.6%","11,519","New York City, New York",27.7
+75,"Best Buy","Retail","43,638","1.8%","125,000","Richfield, Minnesota",12
+76,"United Airlines Holdings","Airlines","43,259","4.7%","96,000","Chicago, Illinois",31.4
+77,"Liberty Mutual Group","Insurance","43,228","1.3%","45,000","Boston, Massachusetts",29.2
+78,"Dow, Inc","Chemicals","42,951","...","36,500","Midland, Michigan",23.8
+79,"Tyson Foods","Food Processing","42,405","5.9%","141,000","Springdale, Arkansas",36.3
+80,"TJX","Retail","41,717","7.0%","286,000","Framingham, Massachusetts",14.6
+82,"Oracle","Software","39,506","0.8%","136,000","Redwood City, California",18.2
+83,"General Dynamics","Airspace and defense","39,350","8.7%","102,900","Reston, Virginia",37.4

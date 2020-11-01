@@ -1,0 +1,71 @@
+---
+title: "BlogCode"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(janitor)
+library(tidyverse)
+library(lubridate)
+library(ical)
+```
+
+
+
+```{r}
+esg <- read_csv('ESG_Data.csv')
+esg <- clean_names(esg)
+esgtest <- esg %>% mutate(test = case_when(industry == 'Retail' | industry == 'Automotive' ~ 'Consumer Discretionary'))
+
+# add sector variable 
+esg2 <- esg %>% 
+  mutate(sector = case_when(industry == 'Retail' |
+                              industry == 'Automotive' ~ 'Consumer Discretionary',
+                            industry == 'Oil and Gas' |
+                              industry == 'Oil and gas' ~ 'Energy',
+                            industry == 'Electronics' |
+                              industry == 'Technology' |
+                              industry == 'Software' ~ 'Technology',
+                            industry == 'Healthcare' |
+                              industry == 'Pharmaceuticals' |
+                              industry == 'Health Insurance' |
+                              industry == "Pharmaceuiticals Manufacturing" |
+                              industry == "Pharmaceuticals Manufacturing" ~ 'Health Care',
+                            industry == 'Financials' |
+                              industry == 'Financial' |
+                              industry == 'Insurance' |
+                              name == 'Berkshire Hathaway' ~ 'Financials',
+                            industry == 'Telecommunications' |
+                              industry == 'Telecom Hardware Manufacturing' ~ 'Telecommunications',
+                            industry == 'Aerospace and defense' |
+                              industry == 'Airspace and defense' |
+                              industry == 'Aerospace and Defense' |
+                              industry == 'Transportation' |
+                              industry == 'Machinery' |
+                              industry == 'Airlines' |
+                              name == 'General Electric' |
+                              name == 'United Technologies' ~ 'Industrials',
+                            industry == 'Media' ~ 'Communication Services',
+                            industry == 'Beverage' |
+                              industry == 'Food production' |
+                              industry == 'Food Service' |
+                              industry == 'Food Processing' ~ 'Consumer Staples',
+                            industry == 'Chemicals' ~ 'Materials'))
+# esg by sector boxplot 
+box <- ggplot(data = esg2, aes(x = sector, y = esg)) +
+  geom_boxplot()
+
+box
+# esg and revenue growth, point 
+gpoint <- ggplot(data = esg2, aes(x = esg, y = revenue_growth)) +
+  geom_point(aes(color = sector))
+gpoint
+gpoint + facet_wrap(~sector)
+
+
+```
+
+
+
+
