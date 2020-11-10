@@ -101,8 +101,54 @@ gc(rD)
 
 #Combine Data
 top_75 <- top_75 %>% cbind(as.data.frame(all_esg)) %>% rename(`ESG` = all_esg)
+
 write.csv(top_75,"/Users/MatthewKaneb/Desktop/ESG_Data", row.names = FALSE)
 ```
+
+```{r sectors}
+esg <- read_csv('ESG_Data.csv')
+esg <- clean_names(esg)
+esgtest <- esg %>% mutate(test = case_when(industry == 'Retail' | industry == 'Automotive' ~ 'Consumer Discretionary'))
+
+# add sector variable 
+esg2 <- esg %>% 
+  mutate(sector = case_when(industry == 'Retail' |
+                              industry == 'Automotive' ~ 'Consumer Discretionary',
+                            industry == 'Oil and Gas' |
+                              industry == 'Oil and gas' ~ 'Energy',
+                            industry == 'Electronics' |
+                              industry == 'Technology' |
+                              industry == 'Software' ~ 'Technology',
+                            industry == 'Healthcare' |
+                              industry == 'Pharmaceuticals' |
+                              industry == 'Health Insurance' |
+                              industry == "Pharmaceuiticals Manufacturing" |
+                              industry == "Pharmaceuticals Manufacturing" ~ 'Health Care',
+                            industry == 'Financials' |
+                              industry == 'Financial' |
+                              industry == 'Insurance' |
+                              name == 'Berkshire Hathaway' ~ 'Financials',
+                            industry == 'Telecommunications' |
+                              industry == 'Telecom Hardware Manufacturing' ~ 'Telecommunications',
+                            industry == 'Aerospace and defense' |
+                              industry == 'Airspace and defense' |
+                              industry == 'Aerospace and Defense' |
+                              industry == 'Transportation' |
+                              industry == 'Machinery' |
+                              industry == 'Airlines' |
+                              name == 'General Electric' |
+                              name == 'United Technologies' ~ 'Industrials',
+                            industry == 'Media' ~ 'Communication Services',
+                            industry == 'Beverage' |
+                              industry == 'Food production' |
+                              industry == 'Food Service' |
+                              industry == 'Food Processing' ~ 'Consumer Staples',
+                            industry == 'Chemicals' ~ 'Materials'))
+
+write.csv(esg2, 'ESG_data2.csv')
+```
+
+
 
 ```{r}
 #Creating Global Companies Dataset
