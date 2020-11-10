@@ -69,6 +69,10 @@ gpoint + facet_wrap(~sector)
 # geom_smooth(method='lm') 
 # geom_smooth(method='lm', formula= revenue_growth~esg)
 
+worldData2 <- worldData %>%
+  separate(Country, into = c('extra', 'Country1', 'Country2'), sep = " ") %>%
+  mutate(Country = str_replace(paste(Country1, Country2), 'NA', ""))
+
 
 ```
 
