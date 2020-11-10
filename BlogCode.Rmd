@@ -52,16 +52,22 @@ esg2 <- esg %>%
                               industry == 'Food Service' |
                               industry == 'Food Processing' ~ 'Consumer Staples',
                             industry == 'Chemicals' ~ 'Materials'))
+
+esg3 <- esg2 %>% 
+  mutate(revenue_growth = parse_number(revenue_growth))
 # esg by sector boxplot 
 box <- ggplot(data = esg2, aes(x = sector, y = esg)) +
   geom_boxplot()
 
 box
 # esg and revenue growth, point 
-gpoint <- ggplot(data = esg2, aes(x = esg, y = revenue_growth)) +
+gpoint <- ggplot(data = esg3, aes(x = esg, y = revenue_growth)) +
   geom_point(aes(color = sector))
 gpoint
 gpoint + facet_wrap(~sector)
+
+# geom_smooth(method='lm') 
+# geom_smooth(method='lm', formula= revenue_growth~esg)
 
 
 ```

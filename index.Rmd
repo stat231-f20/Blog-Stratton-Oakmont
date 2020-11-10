@@ -22,7 +22,7 @@ library(tidyverse)
 ```{r pretty, echo=FALSE, warning=FALSE, message=FALSE}
 esg2 <- read_csv('ESG_Data2.csv')
 
-box <- ggplot(data = esg2, aes(x = sector, y = esg)) +
+box <- ggplot(data = esg2, aes(y = sector, x = esg)) +
   geom_boxplot()
 
 box
