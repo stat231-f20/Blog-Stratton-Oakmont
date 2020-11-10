@@ -71,7 +71,7 @@ gpoint + facet_wrap(~sector)
 
 worldData2 <- worldData %>%
   separate(Country, into = c('extra', 'Country1', 'Country2'), sep = " ") %>%
-  mutate(Country = str_replace(paste(Country1, Country2), 'NA', ""))
+  mutate(Country = str_replace(paste(Country1, Country2), 'NA',))
 
 
 ```

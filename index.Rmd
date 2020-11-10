@@ -3,7 +3,7 @@ title: "Profiting from Sustainability: A Look into Environmentally Conscious Com
 author: "Alex Ristic, Molly Cooper"
 date: "11-10-2020"
 output:
-  rmdformats::readthedown:
+  rmdformats::material:
     thumbnails: false
     highlight: NULL
 ---
