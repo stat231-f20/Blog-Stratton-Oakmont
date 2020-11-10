@@ -1,5 +1,5 @@
 ---
-title: "Your Project Title Here"
+title: "Profiting from Sustainability: A Look into Environmentally Conscious Companies"
 author: "Your Names Here"
 date: "Add a date"
 output:
