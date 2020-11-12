@@ -17,7 +17,6 @@ library(ical)
 esg <- read_csv('ESG_Data.csv')
 esg <- clean_names(esg)
 esgtest <- esg %>% mutate(test = case_when(industry == 'Retail' | industry == 'Automotive' ~ 'Consumer Discretionary'))
-
 # add sector variable 
 esg2 <- esg %>% 
   mutate(sector = case_when(industry == 'Retail' |
@@ -52,30 +51,124 @@ esg2 <- esg %>%
                               industry == 'Food Service' |
                               industry == 'Food Processing' ~ 'Consumer Staples',
                             industry == 'Chemicals' ~ 'Materials'))
-
 esg3 <- esg2 %>% 
   mutate(revenue_growth = parse_number(revenue_growth))
 # esg by sector boxplot 
 box <- ggplot(data = esg2, aes(x = sector, y = esg)) +
   geom_boxplot()
-
 box
 # esg and revenue growth, point 
 gpoint <- ggplot(data = esg3, aes(x = esg, y = revenue_growth)) +
   geom_point(aes(color = sector))
 gpoint
 gpoint + facet_wrap(~sector)
-
 # geom_smooth(method='lm') 
 # geom_smooth(method='lm', formula= revenue_growth~esg)
-
-worldData2 <- worldData %>%
+WorldData2 <- WorldData %>%
   separate(Country, into = c('extra', 'Country1', 'Country2'), sep = " ") %>%
-  mutate(Country = str_replace(paste(Country1, Country2), 'NA',))
-
-
+  mutate(Country = str_replace(paste(Country1, Country2), 'NA', ""))
 ```
 
+```{r}
+#Loading Datasets
+library(maps)
+USData <- esg3 %>%
+  select(esg, headquarters)
+usa_states <- map_data(map = "state"
+                       , region = ".") 
+state_info <- data.frame(state_full = tolower(state.name)
+                         , State = state.abb
+                         , Region = state.region)
+#merging with map dataset
+data(state)
+librarianmap <- librariandata %>%
+  left_join(state_info, by = c("prim_state" = "State")) %>%
+  right_join(usa_states, by = c("state_full" = "region")) 
+#creating map
+ggplot(librarianmap, aes(x = long, y = lat, group = group
+                      , fill = avg_jobs_1000)) +
+  geom_polygon(color = "white") +
+  theme_void() +
+  coord_fixed(ratio = 1.3) +
+  labs(title = "Where Are America's Librarians"
+       , subtitle = "A Look at the Density by State"
+       , caption = "*Scale represents average number of librarians per 1,000 residents in metropolitan areas."
+       , fill = "") +
+  scale_fill_viridis(option = "magma", direction = -1) 
+  #scale_fill_viridis(option = "plasma", direction = -1)
+```
 
+```{r}
+#Global Sustainability Map
+library(maps)
+library(viridis)
+#Data Wrangling
+GlobalData <- WorldData2 %>%
+  select(Company, Country) %>%
+  mutate(`Country` = ifelse(`Country` == 'CA ','Canada',`Country`)) %>%
+  mutate(`Country` = ifelse(`Country` == 'U.S. ','USA',`Country`)) %>%
+  mutate(`Country` = as.character(`Country`)) %>%
+  mutate(`Country` = gsub(" ","",`Country`))
+#Adding Map Data
+WorldMap <- map_data(map = "world", region = ".") %>%
+  select(region, lat, long, group) %>%
+  group_by(region) %>%
+  summarize(long = mean(long),lat = mean(lat)) %>%
+  rename(`Country` = region) %>%
+  mutate(`Country` = gsub(" ","",`Country`))
+#Merging Datasets
+GlobalMap <- GlobalData %>%
+  inner_join(WorldMap)
+#Creating Plot
+ggplot() +
+  geom_polygon(data = GlobalMap, aes(x = long, y = lat, group = group)
+               , color = "black", fill = "white") +
+  # add points for the colleges
+  geom_point(data = GlobalMap, aes(x = long, y = lat
+                                     , color = Company))+
+  theme_void() +
+  coord_fixed(ratio = 1.3) +
+  labs(title = "College Plans for Fall 2020"
+       , subtitle = "as of July 2020"
+       , color = "") +
+  scale_color_brewer(palette = "Dark2") +
+  guides(fill = FALSE) +
+  theme(legend.position = "none") 
+```
 
-
+```{r, eval = FALSE}
+#Creating Global Sustainability Leaflet
+GlobalLeaflet <- map("state", fill = TRUE, plot = FALSE)
+class(usa_states_leaflet)
+usa_states_leaflet$names
+# !!! THESE ARE NOT CORRECT FOR ALL LOCATIONS.  CAN YOU FIGURE OUT A WAY TO FIX IT?
+usa_states_leaflet$n_schools <- college_plans_state$n_schools
+usa_states_leaflet$n_inperson <- college_plans_state$n_inperson
+usa_states_leaflet$prop_inperson <- college_plans_state$prop_inperson
+# colorNumeric is a function from the leaflet package
+mypal <- colorNumeric(
+  palette = "YlGnBu",
+  domain = usa_states_leaflet$prop_inperson
+)
+# identify Amherst College's location
+ac <- college_location %>%
+  filter(institution_name == "Amherst College")
+ac_lat <- ac$latitude_location_of_institution_hd2019
+ac_long <- ac$longitude_location_of_institution_hd2019
+# interactive map
+leaflet(data = usa_states_leaflet) %>% 
+  addTiles() %>%
+  setView(-72.5, 42.4, zoom = 5) %>%
+  addMarkers(lat=ac_lat, lng=ac_long, popup="Amherst College") %>%
+  ## fill color is not based on any variable.  Can you figure out how to map it to proportion 
+  ## planning for in-person learning?
+  addPolygons(fillColor = topo.colors(10, alpha = NULL)
+              , stroke = FALSE
+              , popup = paste0("State: ", usa_states_leaflet$names, "<br>"
+                             , "Number of schools reporting: "
+                             , round(usa_states_leaflet$n_schools,0), "<br>"
+                             , "Number of schools planning for in-person learning: "
+                             , round(usa_states_leaflet$n_inperson,0), "<br>"
+                             , "Proportion planning for in-person learning: "
+                             , round(usa_states_leaflet$prop_inperson,2)))
+```
