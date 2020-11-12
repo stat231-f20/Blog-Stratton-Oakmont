@@ -72,7 +72,7 @@ WorldData2 <- WorldData %>%
 ```{r}
 #Loading Datasets
 library(maps)
-<<<<<<< HEAD
+
 USData <- esg3 %>%
   select(esg, headquarters)
 usa_states <- map_data(map = "state"
@@ -80,7 +80,6 @@ usa_states <- map_data(map = "state"
 state_info <- data.frame(state_full = tolower(state.name)
                          , State = state.abb
                          , Region = state.region)
-=======
 
 
 USData <- esg3 %>%
@@ -93,16 +92,13 @@ state_info <- data.frame(state_full = tolower(state.name)
                          , State = state.abb
                          , Region = state.region)
 
->>>>>>> 91e4f5954648974254b73adfc81f35311cf34541
+
 #merging with map dataset
 data(state)
 librarianmap <- librariandata %>%
   left_join(state_info, by = c("prim_state" = "State")) %>%
   right_join(usa_states, by = c("state_full" = "region")) 
-<<<<<<< HEAD
-=======
 
->>>>>>> 91e4f5954648974254b73adfc81f35311cf34541
 #creating map
 ggplot(librarianmap, aes(x = long, y = lat, group = group
                       , fill = avg_jobs_1000)) +
@@ -115,11 +111,7 @@ ggplot(librarianmap, aes(x = long, y = lat, group = group
        , fill = "") +
   scale_fill_viridis(option = "magma", direction = -1) 
   #scale_fill_viridis(option = "plasma", direction = -1)
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 91e4f5954648974254b73adfc81f35311cf34541
 ```
 
 ```{r}
@@ -165,30 +157,26 @@ ggplot() +
 GlobalLeaflet <- map("state", fill = TRUE, plot = FALSE)
 class(usa_states_leaflet)
 usa_states_leaflet$names
-<<<<<<< HEAD
-=======
 
->>>>>>> 91e4f5954648974254b73adfc81f35311cf34541
+
+
 # !!! THESE ARE NOT CORRECT FOR ALL LOCATIONS.  CAN YOU FIGURE OUT A WAY TO FIX IT?
 usa_states_leaflet$n_schools <- college_plans_state$n_schools
 usa_states_leaflet$n_inperson <- college_plans_state$n_inperson
 usa_states_leaflet$prop_inperson <- college_plans_state$prop_inperson
-<<<<<<< HEAD
-=======
 
->>>>>>> 91e4f5954648974254b73adfc81f35311cf34541
+
 # colorNumeric is a function from the leaflet package
 mypal <- colorNumeric(
   palette = "YlGnBu",
   domain = usa_states_leaflet$prop_inperson
 )
-<<<<<<< HEAD
 # identify Amherst College's location
 ac <- college_location %>%
   filter(institution_name == "Amherst College")
 ac_lat <- ac$latitude_location_of_institution_hd2019
 ac_long <- ac$longitude_location_of_institution_hd2019
-=======
+
 
 # identify Amherst College's location
 ac <- college_location %>%
@@ -197,7 +185,6 @@ ac <- college_location %>%
 ac_lat <- ac$latitude_location_of_institution_hd2019
 ac_long <- ac$longitude_location_of_institution_hd2019
 
->>>>>>> 91e4f5954648974254b73adfc81f35311cf34541
 # interactive map
 leaflet(data = usa_states_leaflet) %>% 
   addTiles() %>%
@@ -215,8 +202,4 @@ leaflet(data = usa_states_leaflet) %>%
                              , "Proportion planning for in-person learning: "
                              , round(usa_states_leaflet$prop_inperson,2)))
 ```
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 91e4f5954648974254b73adfc81f35311cf34541
