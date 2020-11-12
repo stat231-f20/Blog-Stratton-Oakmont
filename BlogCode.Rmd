@@ -69,13 +69,50 @@ gpoint + facet_wrap(~sector)
 # geom_smooth(method='lm') 
 # geom_smooth(method='lm', formula= revenue_growth~esg)
 
-worldData2 <- worldData %>%
+WorldData2 <- WorldData %>%
   separate(Country, into = c('extra', 'Country1', 'Country2'), sep = " ") %>%
   mutate(Country = str_replace(paste(Country1, Country2), 'NA', ""))
-
-
 ```
 
+```{r}
+#Global Sustainability Map
+library(maps)
+library(viridis)
+#Data Wrangling
+GlobalData <- WorldData2 %>%
+  select(Company, Country) %>%
+  mutate(`Country` = ifelse(`Country` == 'CA ','Canada',`Country`)) %>%
+  mutate(`Country` = ifelse(`Country` == 'U.S. ','USA',`Country`)) %>%
+  mutate(`Country` = as.character(`Country`)) %>%
+  mutate(`Country` = gsub(" ","",`Country`))
 
+#Adding Map Data
+WorldMap <- map_data(map = "world", region = ".") %>%
+  select(region, lat, long, group) %>%
+  group_by(region) %>%
+  summarize(long = mean(long),lat = mean(lat)) %>%
+  rename(`Country` = region) %>%
+  mutate(`Country` = gsub(" ","",`Country`))
+#Merging Datasets
+GlobalMap <- GlobalData %>%
+  inner_join(WorldMap)
+
+#Creating Plot
+ggplot() +
+  geom_polygon(data = GlobalMap, aes(x = long, y = lat, group = group)
+               , color = "black", fill = "white") +
+  # add points for the colleges
+  geom_point(data = GlobalMap, aes(x = long, y = lat
+                                     , color = Company))+
+  theme_void() +
+  coord_fixed(ratio = 1.3) +
+  labs(title = "College Plans for Fall 2020"
+       , subtitle = "as of July 2020"
+       , color = "") +
+  scale_color_brewer(palette = "Dark2") +
+  guides(fill = FALSE) +
+  theme(legend.position = "none") 
+
+```
 
 
