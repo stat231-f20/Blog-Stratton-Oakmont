@@ -76,6 +76,7 @@ WorldData2 <- WorldData %>%
 #Loading Datasets
 library(maps)
 data(state)
+library(viridis)
 #Wrangling Datasets
 USData <- esg3 %>%
   select(esg, State) %>%
@@ -88,7 +89,7 @@ States <- map_data(map = "state"
 USMap <- USData %>%
   right_join(usa_states, by = c("State" = "region")) 
 
-#creating map
+#Creating Map
 ggplot(USMap, aes(x = long, y = lat, group = group
                       , fill = ESG)) +
   geom_polygon(color = "white") +
@@ -105,6 +106,7 @@ ggplot(USMap, aes(x = long, y = lat, group = group
 ```{r}
 #Global Sustainability Leaflet
 library(maps)
+library(leaflet)
 #Data Wrangling
 GlobalData <- WorldData2 %>%
   select(Company, Country) %>%
@@ -112,6 +114,7 @@ GlobalData <- WorldData2 %>%
   mutate(`Country` = ifelse(`Country` == 'U.S. ','USA',`Country`)) %>%
   mutate(`Country` = as.character(`Country`)) %>%
   mutate(`Country` = gsub(" ","",`Country`))
+
 #Adding Map Data
 WorldMap <- map_data(map = "world", region = ".") %>%
   select(region, lat, long, group) %>%
@@ -119,60 +122,20 @@ WorldMap <- map_data(map = "world", region = ".") %>%
   summarize(long = mean(long),lat = mean(lat)) %>%
   rename(`Country` = region) %>%
   mutate(`Country` = gsub(" ","",`Country`))
+
 #Merging Datasets
 GlobalMap <- GlobalData %>%
-  inner_join(WorldMap)
+  inner_join(WorldMap) %>%
+  group_by(Country) 
 
-```
-
-```{r, eval = FALSE}
 #Creating Global Sustainability Leaflet
-GlobalLeaflet <- map("state", fill = TRUE, plot = FALSE)
-class(usa_states_leaflet)
-usa_states_leaflet$names
-
-
-
-# !!! THESE ARE NOT CORRECT FOR ALL LOCATIONS.  CAN YOU FIGURE OUT A WAY TO FIX IT?
-usa_states_leaflet$n_schools <- college_plans_state$n_schools
-usa_states_leaflet$n_inperson <- college_plans_state$n_inperson
-usa_states_leaflet$prop_inperson <- college_plans_state$prop_inperson
-
-
-# colorNumeric is a function from the leaflet package
-mypal <- colorNumeric(
-  palette = "YlGnBu",
-  domain = usa_states_leaflet$prop_inperson
-)
-# identify Amherst College's location
-ac <- college_location %>%
-  filter(institution_name == "Amherst College")
-ac_lat <- ac$latitude_location_of_institution_hd2019
-ac_long <- ac$longitude_location_of_institution_hd2019
-
-
-# identify Amherst College's location
-ac <- college_location %>%
-  filter(institution_name == "Amherst College")
-
-ac_lat <- ac$latitude_location_of_institution_hd2019
-ac_long <- ac$longitude_location_of_institution_hd2019
-
-# interactive map
-leaflet(data = usa_states_leaflet) %>% 
-  addTiles() %>%
-  setView(-72.5, 42.4, zoom = 5) %>%
-  addMarkers(lat=ac_lat, lng=ac_long, popup="Amherst College") %>%
-  ## fill color is not based on any variable.  Can you figure out how to map it to proportion 
-  ## planning for in-person learning?
-  addPolygons(fillColor = topo.colors(10, alpha = NULL)
-              , stroke = FALSE
-              , popup = paste0("State: ", usa_states_leaflet$names, "<br>"
-                             , "Number of schools reporting: "
-                             , round(usa_states_leaflet$n_schools,0), "<br>"
-                             , "Number of schools planning for in-person learning: "
-                             , round(usa_states_leaflet$n_inperson,0), "<br>"
-                             , "Proportion planning for in-person learning: "
-                             , round(usa_states_leaflet$prop_inperson,2)))
+GlobalLeaflet <- leaflet(GlobalMap) %>%
+  addCircleMarkers(GlobalMap, lat = ~lat
+                       , lng = ~long
+                       , popup = 
+                       , stroke = FALSE 
+                       , radius = ~count(GlobalMap, Country)
+                       , fillOpacity = 0.9) 
+GlobalLeaflet
 ```
 
