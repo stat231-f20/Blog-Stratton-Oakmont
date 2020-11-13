@@ -133,8 +133,12 @@ GlobalMap <- GlobalData %>%
 
 #Creating Global Sustainability Leaflet
 GlobalLeaflet <- leaflet(GlobalMap) %>%
+<<<<<<< HEAD
   addTiles() %>%
   addCircleMarkers(lat = ~lat
+=======
+  addCircleMarkers(GlobalMap, lat = ~lat
+>>>>>>> 9c3e6ee86a779b71d4b65089afb8f595790129aa
                    , lng = ~long
                    , popup = GlobalMap$Companies
                    , stroke = FALSE 
