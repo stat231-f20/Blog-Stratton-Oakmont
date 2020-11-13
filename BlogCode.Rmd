@@ -14,10 +14,11 @@ library(ical)
 
 
 ```{r}
+# read in csv data
 WorldData <- read_csv('worldData.csv')
 esg <- read_csv('ESG_Data.csv')
 esg <- clean_names(esg)
-esgtest <- esg %>% mutate(test = case_when(industry == 'Retail' | industry == 'Automotive' ~ 'Consumer Discretionary'))
+
 # add sector variable 
 esg2 <- esg %>% 
   mutate(sector = case_when(industry == 'Retail' |
@@ -58,7 +59,7 @@ esg3 <- esg2 %>%
   mutate(State = ifelse(State == 'Cook County','Illinois', State))
   
 # esg by sector boxplot 
-box <- ggplot(data = esg2, aes(x = sector, y = esg)) +
+box <- ggplot(data = esg3, aes(x = sector, y = esg)) +
   geom_boxplot()
 box
 # esg and revenue growth, point 
@@ -146,6 +147,7 @@ GlobalLeaflet
 # dataset with 1 row per country -- have variable that represents number of companies
 # in each country 
 # <br>
+
 
   
 ```
