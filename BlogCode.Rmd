@@ -128,16 +128,25 @@ WorldMap <- map_data(map = "world", region = ".") %>%
 #Merging Datasets
 GlobalMap <- GlobalData %>%
   inner_join(WorldMap) %>%
-  group_by(Country) 
+  group_by(Country, long, lat) %>%
+  summarize(Companies = paste(Company, collapse = ", "), count = n())
 
 #Creating Global Sustainability Leaflet
 GlobalLeaflet <- leaflet(GlobalMap) %>%
-  addCircleMarkers(GlobalMap, lat = ~lat
+  addTiles() %>%
+  addCircleMarkers(lat = ~lat
                    , lng = ~long
-                   , popup = NULL
+                   , popup = GlobalMap$Companies
                    , stroke = FALSE 
-                   , radius = ~count(GlobalMap, Country)
+                   , radius = ~count
                    , fillOpacity = 0.9) 
 GlobalLeaflet
+
+# create dataset (companies that have the same lat  and long)
+# dataset with 1 row per country -- have variable that represents number of companies
+# in each country 
+# <br>
+
+  
 ```
 
