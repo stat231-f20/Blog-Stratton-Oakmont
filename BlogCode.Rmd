@@ -130,7 +130,7 @@ WorldMap <- map_data(map = "world", region = ".") %>%
 GlobalMap <- GlobalData %>%
   inner_join(WorldMap) %>%
   group_by(Country, long, lat) %>%
-  summarize(Companies = paste(Company, collapse = ", "), count = n())
+  summarize(Companies = paste(Company, collapse = "<br>"), count = n())
 
 #Creating Global Sustainability Leaflet
 GlobalLeaflet <- leaflet(GlobalMap) %>%
@@ -143,10 +143,7 @@ GlobalLeaflet <- leaflet(GlobalMap) %>%
                    , fillOpacity = 0.9) 
 GlobalLeaflet
 
-# create dataset (companies that have the same lat  and long)
-# dataset with 1 row per country -- have variable that represents number of companies
-# in each country 
-# <br>
+
 
 
   
