@@ -9,6 +9,9 @@ library(janitor)
 library(tidyverse)
 library(lubridate)
 library(ical)
+library(mosaic)
+library(kableExtra)
+library(lme4)
 ```
 
 
@@ -19,8 +22,9 @@ WorldData <- read_csv('worldData.csv')
 esg <- read_csv('ESG_Data.csv')
 esg <- clean_names(esg)
 
-# add sector variable 
+# prepare data for plots 
 esg2 <- esg %>% 
+  # add sector variable
   mutate(sector = case_when(industry == 'Retail' |
                               industry == 'Automotive' ~ 'Consumer Discretionary',
                             industry == 'Oil and Gas' |
@@ -52,24 +56,95 @@ esg2 <- esg %>%
                               industry == 'Food production' |
                               industry == 'Food Service' |
                               industry == 'Food Processing' ~ 'Consumer Staples',
-                            industry == 'Chemicals' ~ 'Materials'))
-esg3 <- esg2 %>% 
+                            industry == 'Chemicals' ~ 'Materials')) %>%
+  # change revenue growth to numeric var
   mutate(revenue_growth = parse_number(revenue_growth)) %>%
+  # isolate State into its own variable
   separate(headquarters, into = c('County', 'State'), sep = ', ') %>%
   mutate(State = ifelse(State == 'Cook County','Illinois', State))
-  
-# esg by sector boxplot 
-box <- ggplot(data = esg3, aes(x = sector, y = esg)) +
-  geom_boxplot()
-box
-# esg and revenue growth, point 
-gpoint <- ggplot(data = esg3, aes(x = esg, y = revenue_growth)) +
-  geom_point(aes(color = sector))
-gpoint
-gpoint + facet_wrap(~sector)
-# geom_smooth(method='lm') 
-# geom_smooth(method='lm', formula= revenue_growth~esg)
 
+# group similar sectors together for stat analyses
+esg_grouped <- esg2 %>%
+  mutate(sector_group = case_when(
+    sector == 'Communication Services' |
+      sector == 'Telecommunications' |
+      sector == 'Technology' ~ "Tech, Telecomm, and Communications",
+    sector == 'Consumer Discretionary' |
+      sector == 'Consumer Staples' ~ 'Consumer Disc. and Staples',
+    sector == 'Financials' ~ 'Financials',
+    sector == 'Energy' |
+      sector == 'Materials' |
+      sector == 'Industrials' ~ 'Energy, Materials, and Industrials',
+    sector == 'Health Care' ~ 'Health Care')) %>%
+  filter(name != 'Dow, Inc' & name != 'Cigna')
+
+# esg by Sector Group; Boxplot 
+box <- ggplot(data = esg_grouped, aes(y = sector_group, x = esg)) +
+  geom_boxplot(aes(color = sector_group)) +
+  ggtitle('ESG Score by Sector Group') +
+  labs(x = 'ESG Score', y = 'Sector Group') +
+  theme_light()
+
+box + theme(legend.position = "none")
+
+# modify data for table
+esg_table <- esg_grouped %>%
+  group_by(sector_group) %>%
+  summarize('Mean Score' = mean(esg), 'Median Score' = median(esg), 
+            'Std. Deviation' = sd(esg))
+esg_table
+
+kable(esg_table, col.names = c('Sector Group', 'Mean Score', 'Median Score',
+                               'Std. Deviation'))
+
+kable(esg_table, digits = 4, format = "html", row.names = FALSE,
+      col.names = c('Sector Group', 'Mean Score', 'Median Score',
+                               'Std. Deviation')) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = F,
+                font_size = 14,
+                position = "left")
+
+
+
+# esg and revenue growth, point 
+gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
+  geom_point(aes(color = sector_group)) +
+  stat_smooth(aes(group = sector_group, color = sector_group), method = "lm", se = FALSE) +
+  ggtitle('ESG Score and Revenue Growth') +
+  labs(x = 'ESG Score', y = 'Revenue Growth (%)', color = 'Sector Group') +
+  theme_light()
+gpoint
+gpoint + facet_wrap(~sector_group) + geom_smooth(method = 'lm')
+# geom_smooth(method='lm') 
+
+# overall regression
+mod <- lm(revenue_growth ~ esg, data = esg_grouped)
+summary(mod)
+
+# regression by sector group
+mm <- lmList(revenue_growth~esg|sector_group, esg_grouped)
+summary(mm)
+# geom_smooth(method='lm', formula= revenue_growth~esg)
+groups <- unique(esg_grouped$sector_group)
+coefs <- coef(mm)
+coefs
+
+# coeffs <- coefficients(revenue_growth~esg|sector_group, data = esg_grouped)
+# coeffs
+mm <- lmList(revenue_growth~esg|sector_group, esg_grouped)
+reg_stats <- array(NA, dim=c(5,4))
+
+for (k in 1:length(groups)) {
+  reg_stats[k, 1] <- groups[k]
+  reg_stats[k, 2] <-  (summary(mm)$coeff)[groups[k], 'Estimate', 'esg']
+  reg_stats[k, 3] <- (summary(mm)$coeff)[groups[k], 'Pr(>|t|)', 'esg']
+}
+regression <- as.data.frame(reg_stats) %>%
+  mutate('p-value' = as.numeric(V3), 'Coeff. Estimate' = as.numeric(V2)) %>%
+  select('Sector Group' = V1, 'Coeff. Estimate', 'p-value')
+
+# remove emojis from World dataset
 WorldData2 <- WorldData %>%
   separate(Country, into = c('extra', 'Country1', 'Country2'), sep = " ") %>%
   mutate(Country = str_replace(paste(Country1, Country2), 'NA', ""))
@@ -130,7 +205,7 @@ WorldMap <- map_data(map = "world", region = ".") %>%
 GlobalMap <- GlobalData %>%
   inner_join(WorldMap) %>%
   group_by(Country, long, lat) %>%
-  summarize(Companies = paste(Company, collapse = ", "), count = n())
+  summarize(Companies = paste(Company, collapse = "<br>"), count = n())
 
 #Creating Global Sustainability Leaflet
 GlobalLeaflet <- leaflet(GlobalMap) %>%
@@ -143,10 +218,7 @@ GlobalLeaflet <- leaflet(GlobalMap) %>%
                    , fillOpacity = 0.9) 
 GlobalLeaflet
 
-# create dataset (companies that have the same lat  and long)
-# dataset with 1 row per country -- have variable that represents number of companies
-# in each country 
-# <br>
+
 
 
   
