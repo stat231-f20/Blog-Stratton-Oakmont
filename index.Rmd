@@ -19,6 +19,40 @@ library(leaflet)
 ```
 
 # An Introduction to Sustainability
+![](https://images.lifealth.com/uploads/2018/06/Environment-1-1.jpg)
+
+## Planet, People, Profits  
+
+
+In the context of individual and corporate practices, 'Sustainability' refers
+to making decisions that have a positive long-term impact on global and local environments.
+More specifically, sustainable companies are those that achieve their current goals 
+without jeopardizing the way of life of future generations. The concept of sustainability
+and 'sustainable practices' is broken up into three areas, or pillars:
+
+1. Environmental (Planet)
+
+Decisions and processes that protect the environment. This includes reducing waste
+production, water usage, and carbon footprints. 
+
+2. Social (People)
+
+Having a positive impact on employees and human well-being: workers' rights, company
+benefits (insurance, paid leave), resources (education, training), avoiding child labor,
+fundraising and community outreach efforts, investing in public projects.
+
+3. Economic (Profits)
+
+Refers to the importance of profits: a sustainable company must also be profitable
+to ensure that its efforts are not short-lived. Also refers to government subsidies
+and legislation that may encourage sustainable business practices (ex: car battery
+subsidies in the United Kingdom).
+
+These pillars are often used to evaluate the overall sustainability of a company's
+practices, plans, and strategies. 
+
+## Why it Matters
+
 
 # Sustainability in U.S. Companies 
 
@@ -68,7 +102,7 @@ gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
   labs(x = 'ESG Score', y = 'Revenue Growth (%)', color = 'Sector Group') +
   theme_light()
 
-gpoint + theme(legend.position="bottom", legend.box = 'vertical')
+gpoint + theme(legend.position="bottom", legend.direction = 'vertical')
 
 # conduct regressions, store coefficients and p-values for table output
 
