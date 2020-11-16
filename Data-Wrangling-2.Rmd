@@ -108,10 +108,10 @@ write.csv(top_75,"/Users/MatthewKaneb/Desktop/ESG_Data", row.names = FALSE)
 ```{r sectors}
 esg <- read_csv('ESG_Data.csv')
 esg <- clean_names(esg)
-esgtest <- esg %>% mutate(test = case_when(industry == 'Retail' | industry == 'Automotive' ~ 'Consumer Discretionary'))
 
-# add sector variable 
+# prepare data for plots 
 esg2 <- esg %>% 
+  # add sector variable
   mutate(sector = case_when(industry == 'Retail' |
                               industry == 'Automotive' ~ 'Consumer Discretionary',
                             industry == 'Oil and Gas' |
@@ -143,14 +143,36 @@ esg2 <- esg %>%
                               industry == 'Food production' |
                               industry == 'Food Service' |
                               industry == 'Food Processing' ~ 'Consumer Staples',
-                            industry == 'Chemicals' ~ 'Materials'))
+                            industry == 'Chemicals' ~ 'Materials')) %>%
+  # change revenue growth to numeric variable
+  mutate(revenue_growth = parse_number(revenue_growth)) %>%
+  # isolate State into its own variable
+  separate(headquarters, into = c('County', 'State'), sep = ', ') %>%
+  mutate(State = ifelse(State == 'Cook County','Illinois', State))
+
+# group similar sectors together for stat analyses
+esg_grouped <- esg2 %>%
+  mutate(sector_group = case_when(
+    sector == 'Communication Services' |
+      sector == 'Telecommunications' |
+      sector == 'Technology' ~ "Tech, Telecomm, and Communications",
+    sector == 'Consumer Discretionary' |
+      sector == 'Consumer Staples' ~ 'Consumer Disc. and Staples',
+    sector == 'Financials' ~ 'Financials',
+    sector == 'Energy' |
+      sector == 'Materials' |
+      sector == 'Industrials' ~ 'Energy, Materials, and Industrials',
+    sector == 'Health Care' ~ 'Health Care')) %>%
+  filter(name != 'Dow, Inc' & name != 'Cigna')
 
 write.csv(esg2, 'ESG_data2.csv')
+write.csv(esg_grouped, 'ESG_grouped.csv')
 ```
 
 
 
 ```{r}
+
 #Creating Global Companies Dataset
 url <- "https://www.visualcapitalist.com/most-sustainable-companies/"
 paths_allowed <- 'https://www.visualcapitalist.com/most-sustainable-companies/'
@@ -164,9 +186,13 @@ northamerica <- html_table(table[[2]])
 asia <- html_table(table[[3]])
 other <- html_table(table[[4]])
 
+# bind countries together
 WorldData <- europe %>% rbind(northamerica) %>%
-  rbind(asia)%>%
-  rbind(other)
+  rbind(asia) %>%
+  rbind(other) %>%
+  # remove emojis from Country variable
+  separate(Country, into = c('extra', 'Country1', 'Country2'), sep = " ") %>%
+  mutate(Country = str_replace(paste(Country1, Country2), 'NA', ""))
 
 write_csv(WorldData, "worldData.csv")
 ```

@@ -1,101 +1,101 @@
-Rank,Company,Industry,Country
-#1,Ørsted A/S,Wholesale Power,🇩🇰 Denmark
-#2,Chr. Hansen Holding A/S,Food and other chemical agents,🇩🇰 Denmark
-#3,Neste Oyj,Petroleum Refineries,🇫🇮 Finland
-#6,Novozymes A/S,Specialty and Performance Chemicals,🇩🇰 Denmark
-#7,ING Groep NV,Banks,🇳🇱 Netherlands
-#8,Enel SpA,Wholesale Power,🇮🇹 Italy
-#11,Osram Licht AG,Electrical Equipment and Power Systems,🇩🇪 Germany
-#13,Storebrand ASA,Insurance,🇳🇴 Norway
-#14,Umicore SA,Primary Metals Products,🇧🇪 Belgium
-#17,Iberdrola SA,Wholesale Power,🇪🇸 Spain
-#18,Outotec Oyj,Machinery Manufacturing,🇫🇮 Finland
-#20,Accenture PLC,Technology Consulting Services,🇮🇪 Ireland
-#21,Dassault Systemes SE,Software,🇫🇷 France
-#23,Kering SA,Apparel and Accessory Products,🇫🇷 France
-#24,UPM-Kymmene Oyj,Forestry and Paper Products,🇫🇮 Finland
-#27,H & M Hennes & Mauritz AB,Apparel and Accessories Retail,🇸🇪 Sweden
-#28,Sanofi SA,Biopharmaceuticals,🇫🇷 France
-#29,Schneider Electric SE,Industrial Conglomerates,🇫🇷 France
-#31,BNP Paribas SA,Banks,🇫🇷 France
-#32,Kone Oyj,Machinery Manufacturing,🇫🇮 Finland
-#33,Verbund AG,Wholesale Power,🇦🇹 Austria
-#34,Valeo SA,Consumer Vehicles and Parts,🇫🇷 France
-#35,ERG S.p.A.,Wholesale Power,🇮🇹 Italy
-#37,Vestas Wind Systems A/S,Electrical Equipment and Power Systems,🇩🇰 Denmark
-#38,bioMérieux,Diagnostics and Drug Delivery Devices,🇫🇷 France
-#39,Intesa Sanpaolo SpA,Banks,🇮🇹 Italy
-#40,Koninklijke KPN NV,Wireless and Wireline Telecomm. Services,🇳🇱 Netherlands
-#41,Siemens AG,Industrial Conglomerates,🇩🇪 Germany
-#45,Koninklijke DSM NV,Food and other chemical agents,🇳🇱 Netherlands
-#46,Unilever PLC,Personal Care and Cleaning Products,🇬🇧 UK
-#52,Ericsson,Communications Equipment,🇸🇪 Sweden
-#55,Adidas AG,Apparel and Accessory Products,🇩🇪 Germany
-#56,AstraZeneca PLC,Biopharmaceuticals,🇬🇧 UK
-#59,Commerzbank AG,Banks,🇩🇪 Germany
-#61,Abb Ltd,Industrial Conglomerates,🇨🇭 Switzerland
-#64,Pearson PLC,Personal Professional Services,🇬🇧 UK
-#65,BT Group PLC,Wireless and Wireline Telecomm. Services,🇬🇧 UK
-#66,Metso Oyj,Machinery Manufacturing,🇫🇮 Finland
-#69,Assicurazioni Generali SpA,Insurance,🇮🇹 Italy
-#70,Acciona SA,Facilities and Construction Services,🇪🇸 Spain
-#71,Novo Nordisk A/S,Biopharmaceuticals,🇩🇰 Denmark
-#73,Skandinaviska Enskilda Banken AB,Banks,🇸🇪 Sweden
-#76,Ucb S.A.,Biopharmaceuticals,🇧🇪 Belgium
-#79,GlaxoSmithKline PLC,Biopharmaceuticals,🇬🇧 UK
-#87,BASF SE,Specialty and Performance Chemicals,🇩🇪 Germany
-#94,Industria de Diseno Textil SA,Apparel and Accessories Retail,🇪🇸 Spain
-#98,L'Oreal SA,Personal Care and Cleaning Products,🇫🇷 France
-#99,Kesko Corporation,Food and Beverage Retail,🇫🇮 Finland
-#100,Amundi SA,Investment Services,🇫🇷 France
-#4,Cisco Systems Inc,Communications Equipment,🇺🇸 U.S.
-#5,Autodesk Inc,Software,🇺🇸 U.S.
-#10,Algonquin Power & Utilities Corp,Electric Utilities,🇨🇦 CA
-#15,Hewlett Packard Enterprise Co,Computer Hardware,🇺🇸 U.S.
-#16,American Water,Water Utilities,🇺🇸 U.S.
-#22,McCormick & Company,Food and Beverage Production,🇺🇸 U.S.
-#26,Prologis Inc,Real Estate Investment Trusts (REITs),🇺🇸 U.S.
-#44,Bombardier Inc,Aerospace and Defense Manufacturing,🇨🇦 CA
-#47,Sims Metal Management Ltd,Primary Metals Products,🇺🇸 U.S.
-#48,Bank of Montreal,Banks,🇨🇦 CA
-#49,Cascades Inc,Containers and Packaging,🇨🇦 CA
-#53,Danaher Corporation,Medical Devices,🇺🇸 U.S.
-#54,Canadian National Railway Co,Cargo Transportation and Infrastructure Services,🇨🇦 CA
-#57,Stantec Inc,Facilities and Construction Services,🇨🇦 CA
-#58,HP Inc,Computer Peripherals and Systems,🇺🇸 U.S.
-#60,Sun Life Financial Inc,Insurance,🇨🇦 CA
-#62,Alphabet Inc,Internet and Data Services,🇺🇸 U.S.
-#67,Comerica Incorporated,Banks,🇺🇸 U.S.
-#74,Tesla Inc,Consumer Vehicles and Parts,🇺🇸 U.S.
-#77,Workday Inc,Software,🇺🇸 U.S.
-#78,Merck & Co Inc,Biopharmaceuticals,🇺🇸 U.S.
-#81,Intel Corporation,Semiconductor Manufacturing,🇺🇸 U.S.
-#82,Analog Devices Inc,Semiconductor Manufacturing,🇺🇸 U.S.
-#83,IGM Financial Inc,Investment Services,🇨🇦 CA
-#84,Canadian Solar Inc,Electrical Equipment and Power Systems,🇨🇦 CA
-#88,Cogeco Communications Inc,Wireless and Wireline Telecomm. Services,🇨🇦 CA
-#91,Teck Resources Ltd.,Metal Ore Mining,🇨🇦 CA
-#93,Campbell Soup,Food and Beverage Production,🇺🇸 U.S.
-#96,Telus Corp.,Wireless and Wireline Telecomm. Services,🇨🇦 CA
-#12,Sekisui Chemicals,Other Materials,🇯🇵 Japan
-#25,Taiwan Semiconductor,Semiconductor Equipment and Services,🇹🇼 Taiwan
-#36,City Developments Ltd,Real Estate Investment and Services,🇸🇬 Singapore
-#43,Shinhan Financial Group,Banks,🇰🇷 South Korea
-#50,Advantech,Computer Hardware,🇹🇼 Taiwan
-#63,Capitaland Limited,Real Estate Investment and Services,🇸🇬 Singapore
-#68,Takeda Pharmaceutical,Biopharmaceuticals,🇯🇵 Japan
-#72,Konica Minolta,Computer Peripherals and Systems,🇯🇵 Japan
-#80,Samsung,Electrical Equipment and Power Systems,🇰🇷 South Korea
-#85,BYD Co.,Consumer Vehicles and Parts,🇨🇳 China
-#86,Kao Corp.,Personal Care and Cleaning Products,🇯🇵 Japan
-#89,Panasonic Corp.,Computer Hardware,🇯🇵 Japan
-#90,Vitasoy,Food and Beverage Production,🇭🇰 Hong Kong
-#92,Toyota Motor Corp.,Consumer Vehicles and Parts,🇯🇵 Japan
-#95,Singtel,Wireless and Wireline Telecomm. Services,🇸🇬 Singapore
-#97,Lenovo Group,Computer Peripherals and Systems,🇨🇳 China
-#9,Banco do Brasil SA,Banks,🇧🇷 Brazil
-#19,CEMIG,Electric Utilities,🇧🇷 Brazil
-#30,Natura Cosmeticos SA,Personal Care and Cleaning Products,🇧🇷 Brazil
-#42,National Australia Bank Ltd,Banks,🇦🇺 Australia
-#51,Standard Bank Group Ltd,Banks,🇿🇦 South Africa
-#75,Westpac Banking Corp,Banks,🇦🇺 Australia
+Rank,Company,Industry,extra,Country1,Country2,Country
+#1,Ørsted A/S,Wholesale Power,🇩🇰,Denmark,NA,Denmark 
+#2,Chr. Hansen Holding A/S,Food and other chemical agents,🇩🇰,Denmark,NA,Denmark 
+#3,Neste Oyj,Petroleum Refineries,🇫🇮,Finland,NA,Finland 
+#6,Novozymes A/S,Specialty and Performance Chemicals,🇩🇰,Denmark,NA,Denmark 
+#7,ING Groep NV,Banks,🇳🇱,Netherlands,NA,Netherlands 
+#8,Enel SpA,Wholesale Power,🇮🇹,Italy,NA,Italy 
+#11,Osram Licht AG,Electrical Equipment and Power Systems,🇩🇪,Germany,NA,Germany 
+#13,Storebrand ASA,Insurance,🇳🇴,Norway,NA,Norway 
+#14,Umicore SA,Primary Metals Products,🇧🇪,Belgium,NA,Belgium 
+#17,Iberdrola SA,Wholesale Power,🇪🇸,Spain,NA,Spain 
+#18,Outotec Oyj,Machinery Manufacturing,🇫🇮,Finland,NA,Finland 
+#20,Accenture PLC,Technology Consulting Services,🇮🇪,Ireland,NA,Ireland 
+#21,Dassault Systemes SE,Software,🇫🇷,France,NA,France 
+#23,Kering SA,Apparel and Accessory Products,🇫🇷,France,NA,France 
+#24,UPM-Kymmene Oyj,Forestry and Paper Products,🇫🇮,Finland,NA,Finland 
+#27,H & M Hennes & Mauritz AB,Apparel and Accessories Retail,🇸🇪,Sweden,NA,Sweden 
+#28,Sanofi SA,Biopharmaceuticals,🇫🇷,France,NA,France 
+#29,Schneider Electric SE,Industrial Conglomerates,🇫🇷,France,NA,France 
+#31,BNP Paribas SA,Banks,🇫🇷,France,NA,France 
+#32,Kone Oyj,Machinery Manufacturing,🇫🇮,Finland,NA,Finland 
+#33,Verbund AG,Wholesale Power,🇦🇹,Austria,NA,Austria 
+#34,Valeo SA,Consumer Vehicles and Parts,🇫🇷,France,NA,France 
+#35,ERG S.p.A.,Wholesale Power,🇮🇹,Italy,NA,Italy 
+#37,Vestas Wind Systems A/S,Electrical Equipment and Power Systems,🇩🇰,Denmark,NA,Denmark 
+#38,bioMérieux,Diagnostics and Drug Delivery Devices,🇫🇷,France,NA,France 
+#39,Intesa Sanpaolo SpA,Banks,🇮🇹,Italy,NA,Italy 
+#40,Koninklijke KPN NV,Wireless and Wireline Telecomm. Services,🇳🇱,Netherlands,NA,Netherlands 
+#41,Siemens AG,Industrial Conglomerates,🇩🇪,Germany,NA,Germany 
+#45,Koninklijke DSM NV,Food and other chemical agents,🇳🇱,Netherlands,NA,Netherlands 
+#46,Unilever PLC,Personal Care and Cleaning Products,🇬🇧,UK,NA,UK 
+#52,Ericsson,Communications Equipment,🇸🇪,Sweden,NA,Sweden 
+#55,Adidas AG,Apparel and Accessory Products,🇩🇪,Germany,NA,Germany 
+#56,AstraZeneca PLC,Biopharmaceuticals,🇬🇧,UK,NA,UK 
+#59,Commerzbank AG,Banks,🇩🇪,Germany,NA,Germany 
+#61,Abb Ltd,Industrial Conglomerates,🇨🇭,Switzerland,NA,Switzerland 
+#64,Pearson PLC,Personal Professional Services,🇬🇧,UK,NA,UK 
+#65,BT Group PLC,Wireless and Wireline Telecomm. Services,🇬🇧,UK,NA,UK 
+#66,Metso Oyj,Machinery Manufacturing,🇫🇮,Finland,NA,Finland 
+#69,Assicurazioni Generali SpA,Insurance,🇮🇹,Italy,NA,Italy 
+#70,Acciona SA,Facilities and Construction Services,🇪🇸,Spain,NA,Spain 
+#71,Novo Nordisk A/S,Biopharmaceuticals,🇩🇰,Denmark,NA,Denmark 
+#73,Skandinaviska Enskilda Banken AB,Banks,🇸🇪,Sweden,NA,Sweden 
+#76,Ucb S.A.,Biopharmaceuticals,🇧🇪,Belgium,NA,Belgium 
+#79,GlaxoSmithKline PLC,Biopharmaceuticals,🇬🇧,UK,NA,UK 
+#87,BASF SE,Specialty and Performance Chemicals,🇩🇪,Germany,NA,Germany 
+#94,Industria de Diseno Textil SA,Apparel and Accessories Retail,🇪🇸,Spain,NA,Spain 
+#98,L'Oreal SA,Personal Care and Cleaning Products,🇫🇷,France,NA,France 
+#99,Kesko Corporation,Food and Beverage Retail,🇫🇮,Finland,NA,Finland 
+#100,Amundi SA,Investment Services,🇫🇷,France,NA,France 
+#4,Cisco Systems Inc,Communications Equipment,🇺🇸,U.S.,NA,U.S. 
+#5,Autodesk Inc,Software,🇺🇸,U.S.,NA,U.S. 
+#10,Algonquin Power & Utilities Corp,Electric Utilities,🇨🇦,CA,NA,CA 
+#15,Hewlett Packard Enterprise Co,Computer Hardware,🇺🇸,U.S.,NA,U.S. 
+#16,American Water,Water Utilities,🇺🇸,U.S.,NA,U.S. 
+#22,McCormick & Company,Food and Beverage Production,🇺🇸,U.S.,NA,U.S. 
+#26,Prologis Inc,Real Estate Investment Trusts (REITs),🇺🇸,U.S.,NA,U.S. 
+#44,Bombardier Inc,Aerospace and Defense Manufacturing,🇨🇦,CA,NA,CA 
+#47,Sims Metal Management Ltd,Primary Metals Products,🇺🇸,U.S.,NA,U.S. 
+#48,Bank of Montreal,Banks,🇨🇦,CA,NA,CA 
+#49,Cascades Inc,Containers and Packaging,🇨🇦,CA,NA,CA 
+#53,Danaher Corporation,Medical Devices,🇺🇸,U.S.,NA,U.S. 
+#54,Canadian National Railway Co,Cargo Transportation and Infrastructure Services,🇨🇦,CA,NA,CA 
+#57,Stantec Inc,Facilities and Construction Services,🇨🇦,CA,NA,CA 
+#58,HP Inc,Computer Peripherals and Systems,🇺🇸,U.S.,NA,U.S. 
+#60,Sun Life Financial Inc,Insurance,🇨🇦,CA,NA,CA 
+#62,Alphabet Inc,Internet and Data Services,🇺🇸,U.S.,NA,U.S. 
+#67,Comerica Incorporated,Banks,🇺🇸,U.S.,NA,U.S. 
+#74,Tesla Inc,Consumer Vehicles and Parts,🇺🇸,U.S.,NA,U.S. 
+#77,Workday Inc,Software,🇺🇸,U.S.,NA,U.S. 
+#78,Merck & Co Inc,Biopharmaceuticals,🇺🇸,U.S.,NA,U.S. 
+#81,Intel Corporation,Semiconductor Manufacturing,🇺🇸,U.S.,NA,U.S. 
+#82,Analog Devices Inc,Semiconductor Manufacturing,🇺🇸,U.S.,NA,U.S. 
+#83,IGM Financial Inc,Investment Services,🇨🇦,CA,NA,CA 
+#84,Canadian Solar Inc,Electrical Equipment and Power Systems,🇨🇦,CA,NA,CA 
+#88,Cogeco Communications Inc,Wireless and Wireline Telecomm. Services,🇨🇦,CA,NA,CA 
+#91,Teck Resources Ltd.,Metal Ore Mining,🇨🇦,CA,NA,CA 
+#93,Campbell Soup,Food and Beverage Production,🇺🇸,U.S.,NA,U.S. 
+#96,Telus Corp.,Wireless and Wireline Telecomm. Services,🇨🇦,CA,NA,CA 
+#12,Sekisui Chemicals,Other Materials,🇯🇵,Japan,NA,Japan 
+#25,Taiwan Semiconductor,Semiconductor Equipment and Services,🇹🇼,Taiwan,NA,Taiwan 
+#36,City Developments Ltd,Real Estate Investment and Services,🇸🇬,Singapore,NA,Singapore 
+#43,Shinhan Financial Group,Banks,🇰🇷,South,Korea,South Korea
+#50,Advantech,Computer Hardware,🇹🇼,Taiwan,NA,Taiwan 
+#63,Capitaland Limited,Real Estate Investment and Services,🇸🇬,Singapore,NA,Singapore 
+#68,Takeda Pharmaceutical,Biopharmaceuticals,🇯🇵,Japan,NA,Japan 
+#72,Konica Minolta,Computer Peripherals and Systems,🇯🇵,Japan,NA,Japan 
+#80,Samsung,Electrical Equipment and Power Systems,🇰🇷,South,Korea,South Korea
+#85,BYD Co.,Consumer Vehicles and Parts,🇨🇳,China,NA,China 
+#86,Kao Corp.,Personal Care and Cleaning Products,🇯🇵,Japan,NA,Japan 
+#89,Panasonic Corp.,Computer Hardware,🇯🇵,Japan,NA,Japan 
+#90,Vitasoy,Food and Beverage Production,🇭🇰,Hong,Kong,Hong Kong
+#92,Toyota Motor Corp.,Consumer Vehicles and Parts,🇯🇵,Japan,NA,Japan 
+#95,Singtel,Wireless and Wireline Telecomm. Services,🇸🇬,Singapore,NA,Singapore 
+#97,Lenovo Group,Computer Peripherals and Systems,🇨🇳,China,NA,China 
+#9,Banco do Brasil SA,Banks,🇧🇷,Brazil,NA,Brazil 
+#19,CEMIG,Electric Utilities,🇧🇷,Brazil,NA,Brazil 
+#30,Natura Cosmeticos SA,Personal Care and Cleaning Products,🇧🇷,Brazil,NA,Brazil 
+#42,National Australia Bank Ltd,Banks,🇦🇺,Australia,NA,Australia 
+#51,Standard Bank Group Ltd,Banks,🇿🇦,South,Africa,South Africa
+#75,Westpac Banking Corp,Banks,🇦🇺,Australia,NA,Australia 

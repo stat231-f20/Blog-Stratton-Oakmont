@@ -90,8 +90,8 @@ box + theme(legend.position = "none")
 # modify data for table
 esg_table <- esg_grouped %>%
   group_by(sector_group) %>%
-  summarize('Mean Score' = mean(esg), 'median_score' = median(esg), 
-            'Std. Deviation' = sd(esg)) %>%
+  summarize('mean_score' = mean(esg), 'median_score' = median(esg), 
+            'std_deviation' = sd(esg)) %>%
   arrange(desc(median_score))
 
 
@@ -113,9 +113,10 @@ gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
   ggtitle('ESG Score and Revenue Growth') +
   labs(x = 'ESG Score', y = 'Revenue Growth (%)', color = 'Sector Group') +
   theme_light()
+
 gpoint
-gpoint + facet_wrap(~sector_group) + geom_smooth(method = 'lm')
-# geom_smooth(method='lm') 
+
+
 
 # overall regression
 mod <- lm(revenue_growth ~ esg, data = esg_grouped)
@@ -132,29 +133,30 @@ coefs
 # coeffs <- coefficients(revenue_growth~esg|sector_group, data = esg_grouped)
 # coeffs
 mm <- lmList(revenue_growth~esg|sector_group, esg_grouped)
-reg_stats <- array(NA, dim=c(5,4))
+reg_stats <- array(NA, dim=c(6,4))
 
 for (k in 1:length(groups)) {
   reg_stats[k, 1] <- groups[k]
   reg_stats[k, 2] <-  (summary(mm)$coeff)[groups[k], 'Estimate', 'esg']
   reg_stats[k, 3] <- (summary(mm)$coeff)[groups[k], 'Pr(>|t|)', 'esg']
 }
+
+reg_stats[6,1] <- 'All Groups'
+reg_stats[6, 2] <- (summary(mod)$coeff)['esg', 'Estimate']
+reg_stats[6, 3] <- (summary(mod)$coeff)['esg', 'Pr(>|t|)']
+
 regression <- as.data.frame(reg_stats) %>%
   mutate('p-value' = as.numeric(V3), 'Coeff. Estimate' = as.numeric(V2)) %>%
   select('Sector Group' = V1, 'Coeff. Estimate', 'p-value')
 regression
 
 kable(regression, digits = 4, row.names = FALSE,
-      caption = 'Linear Regression: ESG Score Predicting Revenue Growth') %>%
+      caption = 'Linear Regression: ESG Score Predicting Revenue Growth (Revenue Growth ~ ESG)') %>%
   kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
                 font_size = 14,
                 position = "left")
 
-# remove emojis from World dataset
-WorldData2 <- WorldData %>%
-  separate(Country, into = c('extra', 'Country1', 'Country2'), sep = " ") %>%
-  mutate(Country = str_replace(paste(Country1, Country2), 'NA', ""))
 ```
 
 ```{r}

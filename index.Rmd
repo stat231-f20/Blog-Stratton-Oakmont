@@ -11,6 +11,11 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.align="center")
 library(tidyverse)
+library(kableExtra)
+library(lme4)
+library(viridis)
+library(maps)
+library(leaflet)
 ```
 
 # An Introduction to Sustainability
@@ -19,56 +24,164 @@ library(tidyverse)
 
 ## Environmental, Social, and Corporate Governance (ESG)
 
-```{r pretty, echo=FALSE, warning=FALSE, message=FALSE}
-esg2 <- read_csv('ESG_Data2.csv')
+### ESG Across U.S. Sectors
 
-box <- ggplot(data = esg2, aes(y = sector, x = esg)) +
-  geom_boxplot()
+```{r US Sectors, echo=FALSE, warning=FALSE, message=FALSE}
+# read in Sector Group ESG data
+esg_grouped <- read_csv('ESG_grouped.csv')
 
-box
+# esg by Sector Group; Boxplot 
+box <- ggplot(data = esg_grouped, aes(y = sector_group, x = esg)) +
+  geom_boxplot(aes(color = sector_group)) +
+  ggtitle('ESG Score by Sector Group') +
+  labs(x = 'ESG Score', y = 'Sector Group') +
+  theme_light()
+
+box + theme(legend.position = "none")
+
+# modify data for table output
+esg_table <- esg_grouped %>%
+  group_by(sector_group) %>%
+  summarize('mean_score' = mean(esg), 'median_score' = median(esg), 
+            'std_deviation' = sd(esg)) %>%
+  arrange(desc(median_score))
+
+# table of ESG stats by Sector Group
+kable(esg_table, digits = 4, format = "html", row.names = FALSE,
+      col.names = c('Sector Group', 'Mean Score', 'Median Score',
+                               'Std. Deviation'), 
+      caption = 'ESG Score by Sector Group') %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = F,
+                font_size = 14,
+                position = "left")
 ```
 
+### Impact on Revenue Growth
+```{r Regressions, echo=FALSE, warning=FALSE, message=FALSE}
+
+# point plot of revenue growth and ESG Score -- colored by sector 
+gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
+  geom_point(aes(color = sector_group)) +
+  stat_smooth(aes(group = sector_group, color = sector_group), method = "lm", se = FALSE) +
+  ggtitle('ESG Score and Revenue Growth') +
+  labs(x = 'ESG Score', y = 'Revenue Growth (%)', color = 'Sector Group') +
+  theme_light()
+
+gpoint + theme(legend.position="bottom", legend.box = 'vertical')
+
+# conduct regressions, store coefficients and p-values for table output
+
+# overall regression
+mod <- lm(revenue_growth ~ esg, data = esg_grouped)
+
+# regression by sector group
+mm <- lmList(revenue_growth~esg|sector_group, esg_grouped)
+
+groups <- unique(esg_grouped$sector_group)
+
+# array to store regression output
+reg_stats <- array(NA, dim=c(6,4))
+
+# extract ESG coefficients and p-values for each Sector Group
+for (k in 1:length(groups)) {
+  reg_stats[k, 1] <- groups[k]
+  reg_stats[k, 2] <-  (summary(mm)$coeff)[groups[k], 'Estimate', 'esg']
+  reg_stats[k, 3] <- (summary(mm)$coeff)[groups[k], 'Pr(>|t|)', 'esg']
+}
+
+# add coefficient and p-value for Overall regression / All Groups
+reg_stats[6,1] <- 'All Groups'
+reg_stats[6, 2] <- (summary(mod)$coeff)['esg', 'Estimate']
+reg_stats[6, 3] <- (summary(mod)$coeff)['esg', 'Pr(>|t|)']
+
+# convert to dataframe for table output
+regression <- as.data.frame(reg_stats) %>%
+  mutate('p-value' = as.numeric(V3), 'Coeff. Estimate' = as.numeric(V2)) %>%
+  select('Sector Group' = V1, 'Coeff. Estimate', 'p-value')
+
+kable(regression, digits = 4, row.names = FALSE,
+      caption = 'Linear Regression: ESG Score Predicting Revenue Growth (Revenue Growth ~ ESG)') %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = F,
+                font_size = 14,
+                position = "left")
+
+```
+
+### ESG in the U.S.
+```{r US Map, echo=FALSE, warning=FALSE, message=FALSE}
+# read in ESG data
+esg <- read_csv('ESG_data2.csv')
+#Wrangling Datasets for US Map output
+USData <- esg %>%
+  select(esg, State) %>%
+  group_by(State) %>%
+  summarize(ESG = mean(esg)) %>%
+  mutate(State = tolower(State))
+States <- map_data(map = "state"
+                       , region = ".") 
+#Merging with Map Dataset
+USMap <- USData %>%
+  right_join(States, by = c("State" = "region")) 
+
+#Creating Map
+ggplot(USMap, aes(x = long, y = lat, group = group
+                      , fill = ESG)) +
+  geom_polygon(color = "white") +
+  theme_void() +
+  coord_fixed(ratio = 1.3) +
+  labs(title = "Which States House Sustainable Companies?"
+       , subtitle = "The average ESG of companies headquartered in each state."
+       , caption = "*Grey states do not contain a Fortune 100 Company"
+       , fill = "Average ESG Score") +
+  scale_fill_viridis(option = "brewer blues", direction = -1)
+```
 
 # Global Sustainability
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For example, you can include **Bold** and _Italic_ and `Code` text.  For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Most Sustainable Companies in the World
 
-You should test out updating your GitHub Pages website:
+```{r Global, echo=FALSE, warning=FALSE, message=FALSE}
+#Global Sustainability Leaflet
 
-- clone your group's blog project repo in RStudio
-- update "Your Project Title Here" to a new title in the YAML header
-- knit `index.Rmd` 
-- commit and push BOTH the `index.Rmd` and the `index.html` files
-- go to https://stat231-f20.github.io/Blog-Stratton-Oakmont/ to see the published test document (this is publicly available!)
+# read in World Data
+WorldData <- read_csv('worldData.csv')
 
-## Including code and plots
+GlobalData <- WorldData %>%
+  select(Company, Country) %>%
+  mutate(`Country` = ifelse(`Country` == 'CA','Canada',`Country`)) %>%
+  mutate(`Country` = ifelse(`Country` == 'U.S.','USA',`Country`)) %>%
+  mutate(`Country` = as.character(`Country`)) %>%
+  mutate(`Country` = gsub(" ","",`Country`))
 
-You can embed code as normal, for example:
+#Adding Map Data
+WorldMap <- map_data(map = "world", region = ".") %>%
+  select(region, lat, long, group) %>%
+  group_by(region) %>%
+  summarize(long = mean(long),lat = mean(lat)) %>%
+  rename(`Country` = region) %>%
+  mutate(`Country` = gsub(" ","",`Country`))
 
-```{r cars}
-library(kableExtra)
-summary(cars)
+#Merging Datasets
+GlobalMap <- GlobalData %>%
+  inner_join(WorldMap) %>%
+  group_by(Country, long, lat) %>%
+  summarize(Companies = paste(Company, collapse = "<br>"), count = n())
+
+#Creating Global Sustainability Leaflet
+GlobalLeaflet <- leaflet(GlobalMap) %>%
+  addTiles() %>%
+  addCircleMarkers(lat = ~lat
+                   , lng = ~long
+                   , popup = GlobalMap$Companies
+                   , stroke = FALSE 
+                   , radius = ~count
+                   , fillOpacity = 0.9) 
+GlobalLeaflet
+
 ```
 
-In a study from the 1920s, fifty cars were used to see how the speed of the car and the distance taken to stop were related.  Speeds ranged between `r min(cars$speed)` and `r max(cars$speed)` mph.  Distances taken to stop ranged between `r min(cars$dist)` and `r max(cars$dist)` feet, with the middle 50% falling between `r as.numeric(quantile(cars$dist)[2])` and `r as.numeric(quantile(cars$dist)[4])` feet.  
-
-You can also embed plots as normal, for example:
-
-```{r figure1, echo=FALSE}
-ggplot(data = cars, aes(x = speed, y = dist)) + 
-  geom_point() + 
-  labs(x = "Speed of car (mph)"
-       , y = "Distance taken to stop (ft)"
-       , title = "cars data (1920s)")
-
-summary(cars) %>%
-  kable(col.names = c("Speed", "Distance")
-        , row.names = F) %>%
-  kable_styling(bootstrap_options = "striped"
-                , full_width = F) %>%
-  row_spec(0, bold = T, underline = T) %>%
-  column_spec(1:2, width = "1.5in") 
-```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
