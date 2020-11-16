@@ -136,6 +136,23 @@ ggplot(USMap, aes(x = long, y = lat, group = group
        , caption = "*Grey states do not contain a Fortune 100 Company"
        , fill = "Average ESG Score") +
   scale_fill_viridis(option = "brewer blues", direction = -1)
+
+# wrangle data for table output
+USData_table <- esg %>%
+  select(esg, State) %>%
+  group_by(State) %>%
+  summarize(ESG = mean(esg)) %>%
+  arrange(desc(ESG))
+
+
+kable(head(USData_table), digits = 4, row.names = FALSE,
+      caption = 'Top States with Sustainable Companies',
+      col.names = c('State', 'Average Company ESG Score')) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = F,
+                font_size = 14,
+                position = "left")
+
 ```
 
 # Global Sustainability
@@ -191,7 +208,7 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 You can include [Links](https://www.datadreaming.org/post/r-markdown-theme-gallery/) and images ![team logo](https://raw.githubusercontent.com/stat231-f20/Blog-Stratton-Oakmont/main/images/Stratton-Oakmont.png)
 
 
-# You can even create tabs if you want! {.tabset .tabset-fade .tabset-pills}
+# Going Forward
 
 ## Bulleted list
 
