@@ -90,16 +90,15 @@ box + theme(legend.position = "none")
 # modify data for table
 esg_table <- esg_grouped %>%
   group_by(sector_group) %>%
-  summarize('Mean Score' = mean(esg), 'Median Score' = median(esg), 
-            'Std. Deviation' = sd(esg))
-esg_table
+  summarize('Mean Score' = mean(esg), 'median_score' = median(esg), 
+            'Std. Deviation' = sd(esg)) %>%
+  arrange(desc(median_score))
 
-kable(esg_table, col.names = c('Sector Group', 'Mean Score', 'Median Score',
-                               'Std. Deviation'))
 
 kable(esg_table, digits = 4, format = "html", row.names = FALSE,
       col.names = c('Sector Group', 'Mean Score', 'Median Score',
-                               'Std. Deviation')) %>%
+                               'Std. Deviation'), 
+      caption = 'ESG Score by Sector Group') %>%
   kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
                 font_size = 14,
@@ -143,6 +142,14 @@ for (k in 1:length(groups)) {
 regression <- as.data.frame(reg_stats) %>%
   mutate('p-value' = as.numeric(V3), 'Coeff. Estimate' = as.numeric(V2)) %>%
   select('Sector Group' = V1, 'Coeff. Estimate', 'p-value')
+regression
+
+kable(regression, digits = 4, row.names = FALSE,
+      caption = 'Linear Regression: ESG Score Predicting Revenue Growth') %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = F,
+                font_size = 14,
+                position = "left")
 
 # remove emojis from World dataset
 WorldData2 <- WorldData %>%
