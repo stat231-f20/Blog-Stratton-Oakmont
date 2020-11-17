@@ -45,11 +45,22 @@ fundraising and community outreach efforts, investing in public projects.
 
 Refers to the importance of profits: a sustainable company must also be profitable
 to ensure that its efforts are not short-lived. Also refers to government subsidies
-and legislation that may encourage sustainable business practices (ex: car battery
-subsidies in the United Kingdom).
+and legislation that may encourage sustainable business practices.
 
 These pillars are often used to evaluate the overall sustainability of a company's
 practices, plans, and strategies. 
+
+Examples of sustainable efforts:
+
+- General Motors, Volkswagen, and BMW, and other car manufacturers introducing
+electric vehicles
+- Nike and Adidas reducing water, paper, and energy usage. Both
+brands have introduced shoes made out of recycled materials. 
+- Patagonia using recycled cans and bottles to make the polyester for many of its
+clothing items
+- The United Kingdom subsidizing battery production for electric vehicles 
+
+![Adidas x Parley for the Oceans](https://i.insider.com/5caf676ea97f1b22123cf058?width=1136&format=jpeg)
 
 ## Why it Matters
 
@@ -64,23 +75,19 @@ The Top 100 --> We pulled data from the largest revenue generating companies in 
 ```{r US Sectors, echo=FALSE, warning=FALSE, message=FALSE}
 # read in Sector Group ESG data
 esg_grouped <- read_csv('ESG_grouped.csv')
-
 # esg by Sector Group; Boxplot 
 box <- ggplot(data = esg_grouped, aes(y = sector_group, x = esg)) +
   geom_boxplot(aes(color = sector_group)) +
   ggtitle('ESG Score by Sector Group') +
   labs(x = 'ESG Score', y = 'Sector Group') +
   theme_light()
-
 box + theme(legend.position = "none")
-
 # modify data for table output
 esg_table <- esg_grouped %>%
   group_by(sector_group) %>%
   summarize('mean_score' = mean(esg), 'median_score' = median(esg), 
             'std_deviation' = sd(esg)) %>%
   arrange(desc(median_score))
-
 # table of ESG stats by Sector Group
 kable(esg_table, digits = 4, format = "html", row.names = FALSE,
       col.names = c('Sector Group', 'Mean Score', 'Median Score',
@@ -94,7 +101,6 @@ kable(esg_table, digits = 4, format = "html", row.names = FALSE,
 
 ### Impact on Revenue Growth
 ```{r Regressions, echo=FALSE, warning=FALSE, message=FALSE}
-
 # point plot of revenue growth and ESG Score -- colored by sector 
 gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
   geom_point(aes(color = sector_group)) +
@@ -102,46 +108,35 @@ gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
   ggtitle('ESG Score and Revenue Growth') +
   labs(x = 'ESG Score', y = 'Revenue Growth (%)', color = 'Sector Group') +
   theme_light()
-
 gpoint + theme(legend.position="bottom", legend.direction = 'vertical')
-
 # conduct regressions, store coefficients and p-values for table output
-
 # overall regression
 mod <- lm(revenue_growth ~ esg, data = esg_grouped)
-
 # regression by sector group
 mm <- lmList(revenue_growth~esg|sector_group, esg_grouped)
-
 groups <- unique(esg_grouped$sector_group)
-
 # array to store regression output
 reg_stats <- array(NA, dim=c(6,4))
-
 # extract ESG coefficients and p-values for each Sector Group
 for (k in 1:length(groups)) {
   reg_stats[k, 1] <- groups[k]
   reg_stats[k, 2] <-  (summary(mm)$coeff)[groups[k], 'Estimate', 'esg']
   reg_stats[k, 3] <- (summary(mm)$coeff)[groups[k], 'Pr(>|t|)', 'esg']
 }
-
 # add coefficient and p-value for Overall regression / All Groups
 reg_stats[6,1] <- 'All Groups'
 reg_stats[6, 2] <- (summary(mod)$coeff)['esg', 'Estimate']
 reg_stats[6, 3] <- (summary(mod)$coeff)['esg', 'Pr(>|t|)']
-
 # convert to dataframe for table output
 regression <- as.data.frame(reg_stats) %>%
   mutate('p-value' = as.numeric(V3), 'Coeff. Estimate' = as.numeric(V2)) %>%
   select('Sector Group' = V1, 'Coeff. Estimate', 'p-value')
-
 kable(regression, digits = 4, row.names = FALSE,
       caption = 'Linear Regression: ESG Score Predicting Revenue Growth (Revenue Growth ~ ESG)') %>%
   kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
                 font_size = 14,
                 position = "left")
-
 ```
 
 ### ESG in the U.S.
@@ -159,7 +154,6 @@ States <- map_data(map = "state"
 #Merging with Map Dataset
 USMap <- USData %>%
   right_join(States, by = c("State" = "region")) 
-
 #Creating Map
 ggplot(USMap, aes(x = long, y = lat, group = group
                       , fill = ESG)) +
@@ -171,15 +165,12 @@ ggplot(USMap, aes(x = long, y = lat, group = group
        , caption = "*Grey states do not contain a Fortune 100 Company"
        , fill = "Average ESG Score") +
   scale_fill_viridis(option = "brewer blues", direction = -1)
-
 # wrangle data for table output
 USData_table <- esg %>%
   select(esg, State) %>%
   group_by(State) %>%
   summarize(ESG = mean(esg)) %>%
   arrange(desc(ESG))
-
-
 kable(head(USData_table), digits = 4, row.names = FALSE,
       caption = 'Top States with Sustainable Companies',
       col.names = c('State', 'Average Company ESG Score')) %>%
@@ -187,7 +178,6 @@ kable(head(USData_table), digits = 4, row.names = FALSE,
                 full_width = F,
                 font_size = 14,
                 position = "left")
-
 ```
 
 # Global Sustainability
@@ -196,17 +186,14 @@ kable(head(USData_table), digits = 4, row.names = FALSE,
 
 ```{r Global, echo=FALSE, warning=FALSE, message=FALSE}
 #Global Sustainability Leaflet
-
 # read in World Data
 WorldData <- read_csv('worldData.csv')
-
 GlobalData <- WorldData %>%
   select(Company, Country) %>%
   mutate(`Country` = ifelse(`Country` == 'CA','Canada',`Country`)) %>%
   mutate(`Country` = ifelse(`Country` == 'U.S.','USA',`Country`)) %>%
   mutate(`Country` = as.character(`Country`)) %>%
   mutate(`Country` = gsub(" ","",`Country`))
-
 #Adding Map Data
 WorldMap <- map_data(map = "world", region = ".") %>%
   select(region, lat, long, group) %>%
@@ -214,13 +201,11 @@ WorldMap <- map_data(map = "world", region = ".") %>%
   summarize(long = mean(long),lat = mean(lat)) %>%
   rename(`Country` = region) %>%
   mutate(`Country` = gsub(" ","",`Country`))
-
 #Merging Datasets
 GlobalMap <- GlobalData %>%
   inner_join(WorldMap) %>%
   group_by(Country, long, lat) %>%
   summarize(Companies = paste(Company, collapse = "<br>"), count = n())
-
 #Creating Global Sustainability Leaflet
 GlobalLeaflet <- leaflet(GlobalMap) %>%
   addTiles() %>%
@@ -231,7 +216,6 @@ GlobalLeaflet <- leaflet(GlobalMap) %>%
                    , radius = ~count
                    , fillOpacity = 0.9) 
 GlobalLeaflet
-
 ```
 
 
@@ -261,4 +245,3 @@ You can make a numbered list like this
 1. First thing I want to say
 2. Second thing I want to say
 3. Third thing I want to say
-
