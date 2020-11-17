@@ -24,39 +24,96 @@ library(leaflet)
 ## Planet, People, Profits  
 
 
-In the context of individual and corporate practices, 'Sustainability' refers
+In the context of individual and corporate practices, _Sustainability_ refers
 to making decisions that have a positive long-term impact on global and local environments.
 More specifically, sustainable companies are those that achieve their current goals 
 without jeopardizing the way of life of future generations. The concept of sustainability
 and 'sustainable practices' is broken up into three areas, or pillars:
 
-1. Environmental (Planet)
+**1. Environmental (Planet)**
 
 Decisions and processes that protect the environment. This includes reducing waste
 production, water usage, and carbon footprints. 
 
-2. Social (People)
+**2. Social (People)**
 
 Having a positive impact on employees and human well-being: workers' rights, company
 benefits (insurance, paid leave), resources (education, training), avoiding child labor,
 fundraising and community outreach efforts, investing in public projects.
 
-3. Economic (Profits)
+**3. Economic (Profits)**
 
 Refers to the importance of profits: a sustainable company must also be profitable
 to ensure that its efforts are not short-lived. Also refers to government subsidies
-and legislation that may encourage sustainable business practices (ex: car battery
-subsidies in the United Kingdom).
+and legislation that may encourage sustainable business practices.
 
 These pillars are often used to evaluate the overall sustainability of a company's
 practices, plans, and strategies. 
 
+Examples of sustainable efforts:
+
+- General Motors, Volkswagen, and BMW, and other car manufacturers introducing
+electric vehicles
+- Nike and Adidas reducing water, paper, and energy usage. Both
+brands have introduced shoes made out of recycled materials. 
+- Patagonia using recycled cans and bottles to make the polyester for many of its
+clothing items
+- The United Kingdom subsidizing battery production for electric vehicles 
+
+![Adidas x Parley for the Oceans](https://i.insider.com/5caf676ea97f1b22123cf058?width=1136&format=jpeg)
+
 ## Why it Matters
+
+So, why should businesses care about sustainability? For one, there in a moral and
+ethical responsibility surrounding how we (both individuals and corporations) make
+decisions and achieve our goals, as these decisions have a direct impact on present
+and future communities. Moreover, corporate strategy is able to have a very significant
+impact, both positive and negative, on global health and future environmental outcomes. 
+For example, the 1.6 million kilometer mass of plastic floating in the Pacific Ocean
+can be attributed to companies using cheap plastic materials to manufacture and 
+package their products. Additionally, CO2 emissions from manufacturing and 
+traditional energy plants contribute to increases in the earth's temperature, 
+which is projected to cause rising sea levels and destructive natural disasters. 
+
+![Pacific Ocean Garbage Gyre](https://chiletoday.cl/wp-content/uploads/2019/12/cleaningofthepacificgarbagepatch-900x675.jpg)
+
+Sustainability efforts also have monetary motivations. Many CEOs, consumer researchers, 
+and businesses analysts have found that sustainable business practices may be crucial
+for maintaining market share and revenue growth. 
+
+Consumers tend to make purchases that align with their beliefs and values, and these
+values often involve climate change and positive impacts on the environment. A survey
+from Cone Communications found that **87%** of American consumers will purchase
+something from a company if it advocated for an issue that they care about, and that
+**63%** of Americans want corporations to drive social and environmental change.
+
+Moreover, sustainable goods are projected to be growing market. A
+2018 report from Nielsen Global Media found that **$128.5 billion** was spent on 
+sustainable goods and products in 2018 and estimated that this number will reach 
+**$150 billion by 2021.** Nielsen attributes much of this growth to Millenial consumers, 
+who are more likely to change their shopping habits and are willing to pay more 
+for products that are environmentally 'friendly.' As Millenials gradually make a 
+larger and larger proportion of the consumer market, sustainability will become more
+and more of a necessity for companies that want to maintain market share and brand
+loyalty. 
+
+## Our Question
+
+With the increasing importance of sustainability on a company's reputation, marketing
+strategies, and market share, we aim to investigate and quantify the impacts that sustainability
+efforts have on a company's growth and economic success, as well as the prevalence
+of sustainable companies throughout the U.S. and throughout the world. An understanding
+of how sustainable strategies affect corporate growth and profits throughout different
+industries and sectors can be useful information for investors, entrepreneurs, 
+and current business leaders who wish to take advantage of sustainability's
+continuing growth and relevance in the corporate sphere. 
+
 
 
 # Sustainability in U.S. Companies 
-The Top 100 --> We pulled data from the largest revenue generating companies in the U.S. with the exception of 13 companies which are not publicly traded and thus did not have ESG scores available. These companies make up many factions of American life from E-Commerce to Oil to Food and Beverages. These companies have far reaching economic, social, and environmental implications, thus it's essential to consider their efforts to combat climate change, foster equality, and impart positive changes, not only in America, but globally. 
 
+The Top 100 --> We pulled data from the largest revenue generating companies in the U.S. with the exception of 13 companies which are not publicly traded and thus did not have ESG scores available. These companies make up many factions of American life from E-Commerce to Oil to Food and Beverages. These companies have far reaching economic, social, and environmental implications, thus it's essential to consider their efforts to combat climate change, foster equality, and impart positive changes, not only in America, but globally.
+ 
 ## Environmental, Social, and Corporate Governance (ESG)
 
 ### ESG Across U.S. Sectors
@@ -64,23 +121,19 @@ The Top 100 --> We pulled data from the largest revenue generating companies in 
 ```{r US Sectors, echo=FALSE, warning=FALSE, message=FALSE}
 # read in Sector Group ESG data
 esg_grouped <- read_csv('ESG_grouped.csv')
-
 # esg by Sector Group; Boxplot 
 box <- ggplot(data = esg_grouped, aes(y = sector_group, x = esg)) +
   geom_boxplot(aes(color = sector_group)) +
   ggtitle('ESG Score by Sector Group') +
   labs(x = 'ESG Score', y = 'Sector Group') +
   theme_light()
-
 box + theme(legend.position = "none")
-
 # modify data for table output
 esg_table <- esg_grouped %>%
   group_by(sector_group) %>%
   summarize('mean_score' = mean(esg), 'median_score' = median(esg), 
             'std_deviation' = sd(esg)) %>%
   arrange(desc(median_score))
-
 # table of ESG stats by Sector Group
 kable(esg_table, digits = 4, format = "html", row.names = FALSE,
       col.names = c('Sector Group', 'Mean Score', 'Median Score',
@@ -94,7 +147,6 @@ kable(esg_table, digits = 4, format = "html", row.names = FALSE,
 
 ### Impact on Revenue Growth
 ```{r Regressions, echo=FALSE, warning=FALSE, message=FALSE}
-
 # point plot of revenue growth and ESG Score -- colored by sector 
 gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
   geom_point(aes(color = sector_group)) +
@@ -102,46 +154,35 @@ gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
   ggtitle('ESG Score and Revenue Growth') +
   labs(x = 'ESG Score', y = 'Revenue Growth (%)', color = 'Sector Group') +
   theme_light()
-
 gpoint + theme(legend.position="bottom", legend.direction = 'vertical')
-
 # conduct regressions, store coefficients and p-values for table output
-
 # overall regression
 mod <- lm(revenue_growth ~ esg, data = esg_grouped)
-
 # regression by sector group
 mm <- lmList(revenue_growth~esg|sector_group, esg_grouped)
-
 groups <- unique(esg_grouped$sector_group)
-
 # array to store regression output
 reg_stats <- array(NA, dim=c(6,4))
-
 # extract ESG coefficients and p-values for each Sector Group
 for (k in 1:length(groups)) {
   reg_stats[k, 1] <- groups[k]
   reg_stats[k, 2] <-  (summary(mm)$coeff)[groups[k], 'Estimate', 'esg']
   reg_stats[k, 3] <- (summary(mm)$coeff)[groups[k], 'Pr(>|t|)', 'esg']
 }
-
 # add coefficient and p-value for Overall regression / All Groups
 reg_stats[6,1] <- 'All Groups'
 reg_stats[6, 2] <- (summary(mod)$coeff)['esg', 'Estimate']
 reg_stats[6, 3] <- (summary(mod)$coeff)['esg', 'Pr(>|t|)']
-
 # convert to dataframe for table output
 regression <- as.data.frame(reg_stats) %>%
   mutate('p-value' = as.numeric(V3), 'Coeff. Estimate' = as.numeric(V2)) %>%
   select('Sector Group' = V1, 'Coeff. Estimate', 'p-value')
-
 kable(regression, digits = 4, row.names = FALSE,
       caption = 'Linear Regression: ESG Score Predicting Revenue Growth (Revenue Growth ~ ESG)') %>%
   kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
                 font_size = 14,
                 position = "left")
-
 ```
 
 ### ESG in the U.S.
@@ -159,7 +200,6 @@ States <- map_data(map = "state"
 #Merging with Map Dataset
 USMap <- USData %>%
   right_join(States, by = c("State" = "region")) 
-
 #Creating Map
 ggplot(USMap, aes(x = long, y = lat, group = group
                       , fill = ESG)) +
@@ -171,15 +211,12 @@ ggplot(USMap, aes(x = long, y = lat, group = group
        , caption = "*Grey states do not contain a Fortune 100 Company"
        , fill = "Average ESG Score") +
   scale_fill_viridis(option = "brewer blues", direction = -1)
-
 # wrangle data for table output
 USData_table <- esg %>%
   select(esg, State) %>%
   group_by(State) %>%
   summarize(ESG = mean(esg)) %>%
   arrange(desc(ESG))
-
-
 kable(head(USData_table), digits = 4, row.names = FALSE,
       caption = 'Top States with Sustainable Companies',
       col.names = c('State', 'Average Company ESG Score')) %>%
@@ -187,26 +224,24 @@ kable(head(USData_table), digits = 4, row.names = FALSE,
                 full_width = F,
                 font_size = 14,
                 position = "left")
-
 ```
 
 # Global Sustainability
+
+
 
 ## Most Sustainable Companies in the World
 
 ```{r Global, echo=FALSE, warning=FALSE, message=FALSE}
 #Global Sustainability Leaflet
-
 # read in World Data
 WorldData <- read_csv('worldData.csv')
-
 GlobalData <- WorldData %>%
   select(Company, Country) %>%
   mutate(`Country` = ifelse(`Country` == 'CA','Canada',`Country`)) %>%
   mutate(`Country` = ifelse(`Country` == 'U.S.','USA',`Country`)) %>%
   mutate(`Country` = as.character(`Country`)) %>%
   mutate(`Country` = gsub(" ","",`Country`))
-
 #Adding Map Data
 WorldMap <- map_data(map = "world", region = ".") %>%
   select(region, lat, long, group) %>%
@@ -214,13 +249,11 @@ WorldMap <- map_data(map = "world", region = ".") %>%
   summarize(long = mean(long),lat = mean(lat)) %>%
   rename(`Country` = region) %>%
   mutate(`Country` = gsub(" ","",`Country`))
-
 #Merging Datasets
 GlobalMap <- GlobalData %>%
   inner_join(WorldMap) %>%
   group_by(Country, long, lat) %>%
   summarize(Companies = paste(Company, collapse = "<br>"), count = n())
-
 #Creating Global Sustainability Leaflet
 GlobalLeaflet <- leaflet(GlobalMap) %>%
   addTiles() %>%
@@ -231,7 +264,6 @@ GlobalLeaflet <- leaflet(GlobalMap) %>%
                    , radius = ~count
                    , fillOpacity = 0.9) 
 GlobalLeaflet
-
 ```
 
 
@@ -261,4 +293,3 @@ You can make a numbered list like this
 1. First thing I want to say
 2. Second thing I want to say
 3. Third thing I want to say
-
