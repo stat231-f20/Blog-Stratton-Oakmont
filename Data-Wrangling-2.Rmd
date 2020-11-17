@@ -109,6 +109,7 @@ write.csv(top_75,"/Users/MatthewKaneb/Desktop/ESG_Data", row.names = FALSE)
 esg <- read_csv('ESG_Data.csv')
 esg <- clean_names(esg)
 
+
 # prepare data for plots 
 esg2 <- esg %>% 
   # add sector variable

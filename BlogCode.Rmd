@@ -116,6 +116,66 @@ gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
 
 gpoint
 
+# check linearity across all sector groups
+gpoint_check <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
+  geom_point() + facet_wrap(~ sector_group)
+
+gpoint_check
+
+gpoint_check2 <- ggplot(data = esg_grouped, aes(x = log(esg), y = log(revenue_growth))) +
+  geom_point() + facet_wrap(~ sector_group)
+
+gpoint_check2
+
+# check normality across all sector groups for esg scores
+
+ghist_check <- ggplot(data = esg_grouped, aes(x = esg)) +
+  geom_histogram() + facet_wrap(~ sector_group)
+
+ghist_check
+
+ghist_check2 <- ggplot(data = esg_grouped, aes(x = log(esg))) +
+  geom_histogram() + facet_wrap(~ sector_group)
+
+ghist_check2
+
+# "   " for revenue growth 
+
+# regular
+ghist_check_rev <- ggplot(data = esg_grouped, aes(x = revenue_growth)) +
+  geom_histogram() + facet_wrap(~ sector_group)
+
+ghist_check_rev
+
+# log tranformation
+ghist_check_rev2 <- ggplot(data = esg_grouped, aes(x = log(revenue_growth))) +
+  geom_histogram() + facet_wrap(~ sector_group)
+
+ghist_check_rev2
+
+# sqrt transformation
+ghist_check_rev3 <- ggplot(data = esg_grouped, aes(x = sqrt(revenue_growth))) +
+  geom_histogram() + facet_wrap(~ sector_group)
+
+ghist_check_rev3
+
+gf_point(revenue_growth ~ esg, data = esg_grouped)
+gf_point(log(revenue_growth) ~ esg, data = esg_grouped)
+gf_point(log(revenue_growth) ~ sqrt(esg), data = esg_grouped)
+
+# checking normality assumption
+# regular / untransformed revenue growth is skewed to the right 
+gf_histogram(~revenue_growth, data = esg_grouped)
+# log transformation on revenue growth 
+gf_histogram(~log(revenue_growth), data = esg_grouped)
+
+# none of the transformations are very close to normal, but log(esg) seems to remove most of the skew
+gf_histogram(~esg, data = esg_grouped)
+gf_histogram(~ log(esg), data = esg_grouped)
+gf_histogram(~ sqrt(esg), data = esg_grouped)
+
+# proceed with log(revenue_growth) and log)esg
+
 
 
 # overall regression
@@ -129,6 +189,10 @@ summary(mm)
 groups <- unique(esg_grouped$sector_group)
 coefs <- coef(mm)
 coefs
+
+# multiple regression by sector group 
+mm2 <- lmList(log(revenue_growth) ~ log(esg)|sector_group, esg_grouped)
+summary(mm2)
 
 # coeffs <- coefficients(revenue_growth~esg|sector_group, data = esg_grouped)
 # coeffs
@@ -156,6 +220,9 @@ kable(regression, digits = 4, row.names = FALSE,
                 full_width = F,
                 font_size = 14,
                 position = "left")
+
+gf_point(revenue_growth ~ esg, data = esg_grouped)
+gf_point(log(revenue_growth) ~ log(esg), data = esg_grouped)
 
 ```
 
