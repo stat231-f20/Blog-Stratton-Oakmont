@@ -45,27 +45,17 @@ fundraising and community outreach efforts, investing in public projects.
 
 Refers to the importance of profits: a sustainable company must also be profitable
 to ensure that its efforts are not short-lived. Also refers to government subsidies
-and legislation that may encourage sustainable business practices.
+and legislation that may encourage sustainable business practices (ex: car battery
+subsidies in the United Kingdom).
 
 These pillars are often used to evaluate the overall sustainability of a company's
 practices, plans, and strategies. 
-
-Examples of sustainable efforts:
-
-- General Motors, Volkswagen, and BMW, and other car manufacturers introducing
-electric vehicles
-- Nike and Adidas reducing water, paper, and energy usage. Both
-brands have introduced shoes made out of recycled materials. 
-- Patagonia using recycled cans and bottles to make the polyester for many of its
-clothing items
-- The United Kingdom subsidizing battery production for electric vehicles 
-
-![Adidas x Parley for the Oceans](https://i.insider.com/5caf676ea97f1b22123cf058?width=1136&format=jpeg)
 
 ## Why it Matters
 
 
 # Sustainability in U.S. Companies 
+The Top 100 --> We pulled data from the largest revenue generating companies in the U.S. with the exception of 13 companies which are not publicly traded and thus did not have ESG scores available. These companies make up many factions of American life from E-Commerce to Oil to Food and Beverages. These companies have far reaching economic, social, and environmental implications, thus it's essential to consider their efforts to combat climate change, foster equality, and impart positive changes, not only in America, but globally. 
 
 ## Environmental, Social, and Corporate Governance (ESG)
 
