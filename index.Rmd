@@ -266,30 +266,18 @@ GlobalLeaflet <- leaflet(GlobalMap) %>%
 GlobalLeaflet
 ```
 
+#Conclusion
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+To summarize our findings we saw that within US companies, the Energy, Materials, and Industrial sectors displayed the highest overall ESG scores. We then saw that Technology, Telecommunications, and Media had the lowest average ESG scores. Worldwide, we can see a heavy concentration of the most sustainable companies in the US and Europe. 
 
+We faced large limitations in the scope of data available to report for our project. This was mainly due to the amount of free and publicly available information on companies in the US and Globally. We were only able to record 87 of the top 100 companies by revenue in the US because 13 of them were not publicly traded and thus did not have ESG scores to report. Subsequently, we were limited to exploring sustainability within large companies because most smaller and mid-sized companies do not have publicly available data regarding sustainability metrics or revenue. However, with respect to the scope of our project this was not too problematic since we really wanted to look at how the largest companies with the most environmental, social, and economic impact handle sustainability and other metrics. 
 
-## Including links and images
+Thus, we limited the scope of our project which made it's applicability a bit more narrow. If we were able to access a broader scope of data for private and smaller sized companies our US company metrics would have been more indicative of the state of sustainability and responsibility for the country as a whole. Many of the smaller companies have less resources and thus face more challenges in implementing environmental and social practices which are often costly and time-intensive. Our data is certainly skewed in that it represents companies with incredibly vast resources and abilities to implement whatever changes they see fit. We also could have looked more comprehensively at sustainability on a global scale if we had access to more information and there was a standardized metric by which companies are measured in regard to sustainability and social responsibility. ESG scores are currently the most standardized and publicly available numbers we have, but it certainly presents many limitations in access and companies which subscribe to these ratings. 
 
-You can include [Links](https://www.datadreaming.org/post/r-markdown-theme-gallery/) and images ![team logo](https://raw.githubusercontent.com/stat231-f20/Blog-Stratton-Oakmont/main/images/Stratton-Oakmont.png)
+Overall, we were still able to access ample data with regards to the most influential players in the US and many globally, thus our data and visuals were able to reveal a lot of important notions about the state of sustainability and social responsibility in the world. 
 
+#What's Next?
 
-# Going Forward
-
-## Bulleted list
-
-You can make a bulleted list like this:
-
-- item 1
-- item 2
-- item 3
+With global climate change looming and cities becoming increasingly polluted and environmentally troubled, companies must use their resources and power to combat the crisis as best they can. Changing political tides within the US will likely have some influence on the effort and regulations regarding sustainable and ethical practices in business and many countries throughout the world have already begun to implement stricter regulations and encouraged better practices. The difficulty of accessing data regarding sustainability raises an alarming question of the ability for the public to hold companies accountable for their actions and encourage change when necessary. Thus, it's imperative the more standardized metrics are established and public reporting becomes mandatory, otherwise it's impossible for the public to understand and acknowledge the great positive and detrimental impacts many companies are causing to the world. Unsurprisingly, the global data revealed the traditionally wealthier and more developed countries house the most environmentally conscious companies which likely indicates the money and power required to implement better practices. This raises the concern that improving business practices is inaccessible for many and we must find a way to encourage and orchestrate economically feasible solutions to ineffective processes. As a society, we are moving in the right direction by generally recognizing institutional problems regarding social and environmental responsibility in business, but we must have more access and widely availible resources to truly move forward and impact the world in a powerful way. 
 
 
-## Numbered list
-
-You can make a numbered list like this
-
-1. First thing I want to say
-2. Second thing I want to say
-3. Third thing I want to say
