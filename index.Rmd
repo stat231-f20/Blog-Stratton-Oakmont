@@ -55,6 +55,7 @@ practices, plans, and strategies.
 
 
 # Sustainability in U.S. Companies 
+The Top 100 --> We pulled data from the largest revenue generating companies in the U.S. with the exception of 13 companies which are not publicly traded and thus did not have ESG scores available. These companies make up many factions of American life from E-Commerce to Oil to Food and Beverages. These companies have far reaching economic, social, and environmental implications, thus it's essential to consider their efforts to combat climate change, foster equality, and impart positive changes, not only in America, but globally. 
 
 ## Environmental, Social, and Corporate Governance (ESG)
 
