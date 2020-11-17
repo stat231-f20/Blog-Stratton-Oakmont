@@ -228,7 +228,7 @@ kable(head(USData_table), digits = 4, row.names = FALSE,
 
 # Global Sustainability
 
-
+Our Global Sustainability data set comes from the annual Global Knights 100 2020, which measures public companies throughout the globe with over $1 Billion in revenue annually based on their resource, employee, and financial management. These companies represent the top scoring in all of these categories throughout the World. The data is publicly available each year and thus we simply scraped the page from the website. We then used this information to plot the location of the top 100 companies which have great impact and are taking great strides in sustainability practices, financial allotment, and employee treatment throughout the globe.  
 
 ## Most Sustainable Companies in the World
 
