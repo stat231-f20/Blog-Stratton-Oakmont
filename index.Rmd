@@ -352,6 +352,14 @@ ggplot(USMap, aes(x = long, y = lat, group = group
   scale_fill_viridis(option = "brewer blues", direction = -1)
 
 ```
+From the above map, it appears that Virginia and Arkansas house top-75 companies
+of high ESG risk, while Pennsylvania and Michigan house companies of low ESG risk. 
+The tables below provide insight into the highest and lowest-risk states, as well
+as the companies contributing to their high/low ESG risk averages. It appears
+that the risk averages in Virginia and Illinois are brought up by companies that belong
+to the the Energy, Materials, and Industrial sector group. This corroborates our earlier
+finding that top-75 companies in this sector group demonstrate higher ESG risks, on average, 
+than those in other sector groups. 
 
 ### {.tabset}
 
@@ -372,7 +380,7 @@ kable(head(USData_table_high), digits = 4, row.names = FALSE,
   kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
                 font_size = 14,
-                position = "left")
+                position = "center")
 
 # collect / wrangle companies in these high risk states, table output
 high_states <- esg_grouped %>%
@@ -387,7 +395,7 @@ kable(head(high_states), digits = 4, row.names = FALSE,
   kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
                 font_size = 14,
-                position = "left")
+                position = "center")
 
 ```
 
@@ -409,7 +417,7 @@ kable(head(USData_table_low), digits = 4, row.names = FALSE,
   kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
                 font_size = 14,
-                position = "left")
+                position = "center")
 
 # collect / wrangle companies in these low risk states, table output
 low_states <- esg_grouped %>%
@@ -424,7 +432,7 @@ kable(head(low_states), digits = 4, row.names = FALSE,
   kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
                 font_size = 14,
-                position = "left")
+                position = "center")
 
 ```
 
@@ -494,7 +502,7 @@ https://online.maryville.edu/blog/importance-of-environmental-awareness-when-run
 https://www.businessinsider.com/companies-using-recycled-plastic-in-products
 https://www.bizjournals.com/bizwomen/news/latest-news/2018/12/millennials-drive-big-growth-in-sustainable.html?page=all
 https://www.investopedia.com/terms/s/sustainability.asp
-https://www.investopedia.com/articles/investing/100515/three-pillars-corporate-sustainability.asp#:~:text=Sustainability%20is%20most%20often%20defined,as%20people%2C%20planet%20and%20profits.
+https://www.investopedia.com/articles/investing/100515/three-pillars-corporate-sustainability
 https://www.investopedia.com/terms/e/environmental-social-and-governance-esg-criteria.asp
 
 #### Images
