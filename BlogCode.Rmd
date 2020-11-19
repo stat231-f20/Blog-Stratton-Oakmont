@@ -20,6 +20,9 @@ library(lme4)
 # read in WorldData for Leaflet plot
 WorldData <- read_csv('worldData.csv')
 
+# read in ungrouped esg data for US map 
+esg <- read_csv('ESG_data2.csv')
+
 # read in wrangled Sector-Grouped data for visuals and stat analyses 
 esg_grouped <- read_csv('ESG_grouped.csv')
 
@@ -217,7 +220,7 @@ library(maps)
 data(state)
 library(viridis)
 #Wrangling Datasets
-USData <- esg3 %>%
+USData <- esg %>%
   select(esg, State) %>%
   group_by(State) %>%
   summarize(ESG = mean(esg)) %>%
@@ -247,7 +250,7 @@ ggplot(USMap, aes(x = long, y = lat, group = group
 library(maps)
 library(leaflet)
 #Data Wrangling
-GlobalData <- WorldData2 %>%
+GlobalData <- WorldData %>%
   select(Company, Country) %>%
   mutate(`Country` = ifelse(`Country` == 'CA ','Canada',`Country`)) %>%
   mutate(`Country` = ifelse(`Country` == 'U.S. ','USA',`Country`)) %>%

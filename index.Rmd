@@ -139,8 +139,8 @@ screen for ESG investing opportunities — both for themselves and for clients.
 
 Public (ie. free) ESG data is typically very hard to come by, as it's often
 used by professional and retail investors to help make profitable investment decisions.
-As a result, ESG research companies, like _Sustainalytics_ generally charge a 
-(several hundred dollar) subscription fee to gain access to their large sets of ESG data 
+As a result, ESG research companies, like [Sustainalytics](https://www.sustainalytics.com/esg-ratings/) 
+generally charge a (several hundred dollar) subscription fee to gain access to their large sets of ESG data 
 and research reports. However, Sustainalytics does have a free ESG Rating search tool that returns ESG Risk 
 Ratings for any publicly-traded company. 
 
@@ -484,5 +484,25 @@ Overall, we were still able to access ample data with regards to the most influe
 ## What's Next?
 
 With global climate change looming and cities becoming increasingly polluted and environmentally troubled, companies must use their resources and power to combat the crisis as best they can. Changing political tides within the US will likely have some influence on the effort and regulations regarding sustainable and ethical practices in business and many countries throughout the world have already begun to implement stricter regulations and encouraged better practices. The difficulty of accessing data regarding sustainability raises an alarming question of the ability for the public to hold companies accountable for their actions and encourage change when necessary. Thus, it's imperative the more standardized metrics are established and public reporting becomes mandatory, otherwise it's impossible for the public to understand and acknowledge the great positive and detrimental impacts many companies are causing to the world. Unsurprisingly, the global data revealed the traditionally wealthier and more developed countries house the most environmentally conscious companies which likely indicates the money and power required to implement better practices. This raises the concern that improving business practices is inaccessible for many and we must find a way to encourage and orchestrate economically feasible solutions to ineffective processes. As a society, we are moving in the right direction by generally recognizing institutional problems regarding social and environmental responsibility in business, but we must have more access and widely availible resources to truly move forward and impact the world in a powerful way. 
+
+### Sources
+
+#### Background
+
+https://www.imd.org/research-knowledge/articles/why-all-businesses-should-embrace-sustainability/
+https://online.maryville.edu/blog/importance-of-environmental-awareness-when-running-a-business/
+https://www.businessinsider.com/companies-using-recycled-plastic-in-products
+https://www.bizjournals.com/bizwomen/news/latest-news/2018/12/millennials-drive-big-growth-in-sustainable.html?page=all
+https://www.investopedia.com/terms/s/sustainability.asp
+https://www.investopedia.com/articles/investing/100515/three-pillars-corporate-sustainability.asp#:~:text=Sustainability%20is%20most%20often%20defined,as%20people%2C%20planet%20and%20profits.
+https://www.investopedia.com/terms/e/environmental-social-and-governance-esg-criteria.asp
+
+#### Images
+https://www.lifealth.com/wellness/healthy-living/world-environment-day-2018-easy-ways-take-care-environment-av/77189/
+https://www.businessinsider.com/companies-using-recycled-plastic-in-products
+https://chiletoday.cl/floating-garbage-patches-grow-in-the-pacific-ocean/
+
+#### ESG Ratings
+https://www.sustainalytics.com/esg-ratings/
 
 
