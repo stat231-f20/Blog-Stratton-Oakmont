@@ -209,8 +209,7 @@ kable(regression, digits = 4, row.names = FALSE,
                 font_size = 14,
                 position = "left")
 
-gf_point(revenue_growth ~ esg, data = esg_grouped)
-gf_point(log(revenue_growth) ~ log(esg), data = esg_grouped)
+
 
 ```
 
@@ -239,7 +238,7 @@ ggplot(USMap, aes(x = long, y = lat, group = group
   coord_fixed(ratio = 1.3) +
   labs(title = "Which States House Sustainable Companies?"
        , subtitle = "The average ESG of companies headquartered in each state."
-       , caption = "*Grey states do not contain a Fortune 100 Company"
+       , caption = "*Grey states do not contain a Top-75 Company"
        , fill = "Average ESG Score") +
   scale_fill_viridis(option = "brewer blues", direction = -1)
 
