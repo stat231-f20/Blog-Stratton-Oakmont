@@ -18,8 +18,18 @@ library(maps)
 library(leaflet)
 
 # read in all datasets that are used in code chunks below
+
+# ESG ratings and companies, Used for US Choropleth 
 esg <- read_csv('ESG_data2.csv')
 
+# Used for boxplot and regression analysis
+esg_grouped <- read_csv('ESG_grouped.csv')
+
+# summnary of regression results
+regression <- read_csv('regression_data.csv')
+
+# Top 100 global sustaiunability, used for Leaflet 
+WorldData <- read_csv('worldData.csv')
 ```
 
 # An Introduction to Sustainability
@@ -163,7 +173,7 @@ The sector group assignments followed the criteria below:
 
 ```{r assignments, echo = TRUE, warning = FALSE, message = FALSE, eval= FALSE}
 # group similar sectors together for stat analyses
-esg_grouped <- esg2 %>%
+esg_grouped <- esg %>%
   mutate(sector_group = case_when(
     sector == 'Communication Services' |
       sector == 'Telecommunications' |
@@ -188,8 +198,7 @@ and Industrials group has the highest mean and median risk rating, while the
 Tech, Telecomm, and Communications group has the lowest mean and median rating. 
 
 ```{r US Sectors, echo=FALSE, warning=FALSE, message=FALSE}
-# read in Sector Group ESG data
-esg_grouped <- read_csv('ESG_grouped.csv')
+
 # esg by Sector Group; Boxplot 
 box <- ggplot(data = esg_grouped, aes(y = sector_group, x = esg)) +
   geom_boxplot() +
@@ -272,6 +281,7 @@ gpoint_check3
 ### Impact on Revenue Growth
 ```{r Regressions, echo=FALSE, warning=FALSE, message=FALSE}
 # point plot of revenue growth and ESG Score -- colored by sector 
+
 gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
   geom_point(aes(color = sector_group)) +
   stat_smooth(aes(group = sector_group, color = sector_group), method = "lm", se = FALSE) +
@@ -280,28 +290,8 @@ gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
   theme_light()
 gpoint + theme(legend.position="bottom", legend.direction = 'vertical')
 
-# conduct regressions, store coefficients and p-values for table output
-# overall regression
-mod <- lm(revenue_growth ~ esg, data = esg_grouped)
-# regression by sector group
-mm <- lmList(revenue_growth~esg|sector_group, esg_grouped)
-groups <- unique(esg_grouped$sector_group)
-# array to store regression output
-reg_stats <- array(NA, dim=c(6,4))
-# extract ESG coefficients and p-values for each Sector Group
-for (k in 1:length(groups)) {
-  reg_stats[k, 1] <- groups[k]
-  reg_stats[k, 2] <-  (summary(mm)$coeff)[groups[k], 'Estimate', 'esg']
-  reg_stats[k, 3] <- (summary(mm)$coeff)[groups[k], 'Pr(>|t|)', 'esg']
-}
-# add coefficient and p-value for Overall regression / All Groups
-reg_stats[6,1] <- 'All Groups'
-reg_stats[6, 2] <- (summary(mod)$coeff)['esg', 'Estimate']
-reg_stats[6, 3] <- (summary(mod)$coeff)['esg', 'Pr(>|t|)']
-# convert to dataframe for table output
-regression <- as.data.frame(reg_stats) %>%
-  mutate('p-value' = as.numeric(V3), 'Coeff. Estimate' = as.numeric(V2)) %>%
-  select('Sector Group' = V1, 'Coeff. Estimate', 'p-value')
+# table output for regression results
+
 kable(regression, digits = 4, row.names = FALSE,
       caption = 'Linear Regression: ESG Risk Rating Predicting Revenue Growth (Revenue Growth ~ ESG)') %>%
   kable_styling(bootstrap_options = c("striped", "hover"),
@@ -441,6 +431,7 @@ kable(head(low_states), digits = 4, row.names = FALSE,
 
 # Global Sustainability
 
+
 ## Global Knights 100 Data
 
 Our Global Sustainability data set comes from the annual Global Knights 100 2020, which measures public companies throughout the globe with over $1 Billion in revenue annually based on their resource, employee, and financial management. These companies represent the top scoring in all of these categories throughout the World. The data is publicly available each year and thus we simply scraped the page from the website. We then used this information to plot the location of the top 100 companies which have great impact and are taking great strides in sustainability practices, financial allotment, and employee treatment throughout the globe.  
@@ -449,8 +440,7 @@ Our Global Sustainability data set comes from the annual Global Knights 100 2020
 
 ```{r Global, echo=FALSE, warning=FALSE, message=FALSE}
 #Global Sustainability Leaflet
-# read in World Data
-WorldData <- read_csv('worldData.csv')
+
 GlobalData <- WorldData %>%
   select(Company, Country) %>%
   mutate(`Country` = ifelse(`Country` == 'CA','Canada',`Country`)) %>%

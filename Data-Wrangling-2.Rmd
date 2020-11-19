@@ -106,6 +106,8 @@ write.csv(top_75,"/Users/MatthewKaneb/Desktop/ESG_Data", row.names = FALSE)
 ```
 
 ```{r sectors}
+
+# here, wrangling and mutating EGS dataset (collected above) to prepare for plots and regression analysis
 esg <- read_csv('ESG_Data.csv')
 esg <- clean_names(esg)
 
@@ -151,7 +153,7 @@ esg2 <- esg %>%
   separate(headquarters, into = c('County', 'State'), sep = ', ') %>%
   mutate(State = ifelse(State == 'Cook County','Illinois', State))
 
-# group similar sectors together for stat analyses
+# group similar sectors together for stat analyses (Sector Group variable)
 esg_grouped <- esg2 %>%
   mutate(sector_group = case_when(
     sector == 'Communication Services' |
@@ -166,6 +168,7 @@ esg_grouped <- esg2 %>%
     sector == 'Health Care' ~ 'Health Care')) %>%
   filter(name != 'Dow, Inc' & name != 'Cigna')
 
+# export both grouped and non-grouped
 write.csv(esg2, 'ESG_data2.csv')
 write.csv(esg_grouped, 'ESG_grouped.csv')
 ```
@@ -176,7 +179,7 @@ write.csv(esg_grouped, 'ESG_grouped.csv')
 
 #Creating Global Companies Dataset
 url <- "https://www.visualcapitalist.com/most-sustainable-companies/"
-paths_allowed <- 'https://www.visualcapitalist.com/most-sustainable-companies/'
+paths_allowed('https://www.visualcapitalist.com/most-sustainable-companies/')
 
 table <- url %>%
   read_html() %>%

@@ -17,68 +17,13 @@ library(lme4)
 
 
 ```{r}
-# read in csv data
+# read in WorldData for Leaflet plot
 WorldData <- read_csv('worldData.csv')
-esg <- read_csv('ESG_Data.csv')
-esg <- clean_names(esg)
 
-# prepare data for plots 
-esg2 <- esg %>% 
-  # add sector variable
-  mutate(sector = case_when(industry == 'Retail' |
-                              industry == 'Automotive' ~ 'Consumer Discretionary',
-                            industry == 'Oil and Gas' |
-                              industry == 'Oil and gas' ~ 'Energy',
-                            industry == 'Electronics' |
-                              industry == 'Technology' |
-                              industry == 'Software' ~ 'Technology',
-                            industry == 'Healthcare' |
-                              industry == 'Pharmaceuticals' |
-                              industry == 'Health Insurance' |
-                              industry == "Pharmaceuiticals Manufacturing" |
-                              industry == "Pharmaceuticals Manufacturing" ~ 'Health Care',
-                            industry == 'Financials' |
-                              industry == 'Financial' |
-                              industry == 'Insurance' |
-                              name == 'Berkshire Hathaway' ~ 'Financials',
-                            industry == 'Telecommunications' |
-                              industry == 'Telecom Hardware Manufacturing' ~ 'Telecommunications',
-                            industry == 'Aerospace and defense' |
-                              industry == 'Airspace and defense' |
-                              industry == 'Aerospace and Defense' |
-                              industry == 'Transportation' |
-                              industry == 'Machinery' |
-                              industry == 'Airlines' |
-                              name == 'General Electric' |
-                              name == 'United Technologies' ~ 'Industrials',
-                            industry == 'Media' ~ 'Communication Services',
-                            industry == 'Beverage' |
-                              industry == 'Food production' |
-                              industry == 'Food Service' |
-                              industry == 'Food Processing' ~ 'Consumer Staples',
-                            industry == 'Chemicals' ~ 'Materials')) %>%
-  # change revenue growth to numeric var
-  mutate(revenue_growth = parse_number(revenue_growth)) %>%
-  # isolate State into its own variable
-  separate(headquarters, into = c('County', 'State'), sep = ', ') %>%
-  mutate(State = ifelse(State == 'Cook County','Illinois', State))
+# read in wrangled Sector-Grouped data for visuals and stat analyses 
+esg_grouped <- read_csv('ESG_grouped.csv')
 
-# group similar sectors together for stat analyses
-esg_grouped <- esg2 %>%
-  mutate(sector_group = case_when(
-    sector == 'Communication Services' |
-      sector == 'Telecommunications' |
-      sector == 'Technology' ~ "Tech, Telecomm, and Communications",
-    sector == 'Consumer Discretionary' |
-      sector == 'Consumer Staples' ~ 'Consumer Disc. and Staples',
-    sector == 'Financials' ~ 'Financials',
-    sector == 'Energy' |
-      sector == 'Materials' |
-      sector == 'Industrials' ~ 'Energy, Materials, and Industrials',
-    sector == 'Health Care' ~ 'Health Care')) %>%
-  filter(name != 'Dow, Inc' & name != 'Cigna')
-
-# esg by Sector Group; Boxplot 
+# esg risk rating by Sector Group; Boxplot 
 box <- ggplot(data = esg_grouped, aes(y = sector_group, x = esg)) +
   geom_boxplot(aes(color = sector_group)) +
   ggtitle('ESG Score by Sector Group') +
@@ -87,14 +32,14 @@ box <- ggplot(data = esg_grouped, aes(y = sector_group, x = esg)) +
 
 box + theme(legend.position = "none")
 
-# modify data for table
+# briefly wrangle for table output -- summarize function to grab mean and medians
 esg_table <- esg_grouped %>%
   group_by(sector_group) %>%
   summarize('mean_score' = mean(esg), 'median_score' = median(esg), 
             'std_deviation' = sd(esg)) %>%
   arrange(desc(median_score))
 
-
+# table output: mean/median/sd of esg risk for each sector group
 kable(esg_table, digits = 4, format = "html", row.names = FALSE,
       col.names = c('Sector Group', 'Mean Score', 'Median Score',
                                'Std. Deviation'), 
@@ -105,6 +50,8 @@ kable(esg_table, digits = 4, format = "html", row.names = FALSE,
                 position = "left")
 
 
+# Check assumptions for linear regression. Will check for each sector group, and for
+# aggregate case / all observations together 
 
 # esg and revenue growth, point 
 gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
@@ -117,29 +64,46 @@ gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
 gpoint
 
 # check linearity across all sector groups
+
+# no transformation
 gpoint_check <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
   geom_point() + facet_wrap(~ sector_group)
 
 gpoint_check
 
+# log transformation
 gpoint_check2 <- ggplot(data = esg_grouped, aes(x = log(esg), y = log(revenue_growth))) +
   geom_point() + facet_wrap(~ sector_group)
 
 gpoint_check2
 
+# square root transformation
+gpoint_check3 <- ggplot(data = esg_grouped, aes(x = sqrt(esg), y = sqrt(revenue_growth))) +
+  geom_point() + facet_wrap(~ sector_group)
+
+gpoint_check3
+
 # check normality across all sector groups for esg scores
 
+# no transformation
 ghist_check <- ggplot(data = esg_grouped, aes(x = esg)) +
   geom_histogram() + facet_wrap(~ sector_group)
 
 ghist_check
 
+# log transformation
 ghist_check2 <- ggplot(data = esg_grouped, aes(x = log(esg))) +
   geom_histogram() + facet_wrap(~ sector_group)
 
 ghist_check2
 
-# "   " for revenue growth 
+# square root transformation
+ghist_check3 <- ggplot(data = esg_grouped, aes(x = sqrt(esg))) +
+  geom_histogram() + facet_wrap(~ sector_group)
+
+ghist_check3
+
+# check normality across all sector groups for revenue growth 
 
 # regular
 ghist_check_rev <- ggplot(data = esg_grouped, aes(x = revenue_growth)) +
@@ -147,7 +111,7 @@ ghist_check_rev <- ggplot(data = esg_grouped, aes(x = revenue_growth)) +
 
 ghist_check_rev
 
-# log tranformation
+# log transformation
 ghist_check_rev2 <- ggplot(data = esg_grouped, aes(x = log(revenue_growth))) +
   geom_histogram() + facet_wrap(~ sector_group)
 
@@ -159,9 +123,13 @@ ghist_check_rev3 <- ggplot(data = esg_grouped, aes(x = sqrt(revenue_growth))) +
 
 ghist_check_rev3
 
+# checking linearity for aggregate case
+# no transformation
 gf_point(revenue_growth ~ esg, data = esg_grouped)
+# log transformation
 gf_point(log(revenue_growth) ~ esg, data = esg_grouped)
-gf_point(log(revenue_growth) ~ sqrt(esg), data = esg_grouped)
+# sqrt transformation
+gf_point(sqrt(revenue_growth) ~ sqrt(esg), data = esg_grouped)
 
 # checking normality assumption
 # regular / untransformed revenue growth is skewed to the right 
@@ -169,34 +137,45 @@ gf_histogram(~revenue_growth, data = esg_grouped)
 # log transformation on revenue growth 
 gf_histogram(~log(revenue_growth), data = esg_grouped)
 
-# none of the transformations are very close to normal, but log(esg) seems to remove most of the skew
-gf_histogram(~esg, data = esg_grouped)
-gf_histogram(~ log(esg), data = esg_grouped)
-gf_histogram(~ sqrt(esg), data = esg_grouped)
+# checking assumptions: conclusion 
+# it appears that both log and sqrt transformations have a marginal effect
+# on linearity and normality for each sector group. When these transformations
+# are applied, some of the sector groups become more linear / normal, while
+# others stay the 'same' or arguably become less linear / normal. In the aggregate
+# case, log and sqrt transformations also don't seem to have an impact on linearity, 
+# though the log transformation does increase normality for revenue growth. But, 
+# based on the transformations for each sector group, we decide to move forward with
+# the regular, untransformed data. We recognize that the assumptions for linear 
+# regression are not strongly met and understand the potential limitations of our results. 
 
-# proceed with log(revenue_growth) and log)esg
+
+# point plot, with regression lines, for Revenue Growth and ESG Rating
+
+gpoint <- ggplot(data = esg_grouped, aes(x = esg, y = revenue_growth)) +
+  geom_point(aes(color = sector_group)) +
+  stat_smooth(aes(group = sector_group, color = sector_group), method = "lm", se = FALSE) +
+  ggtitle('ESG Score and Revenue Growth') +
+  labs(x = 'ESG Score', y = 'Revenue Growth (%)', color = 'Sector Group') +
+  theme_light()
+
+gpoint
 
 
 
-# overall regression
+# overall linear regression between revenue growth and esg ratings 
 mod <- lm(revenue_growth ~ esg, data = esg_grouped)
-summary(mod)
 
-# regression by sector group
+
+# linear regression (rev growth ~ esg) for each sector group
 mm <- lmList(revenue_growth~esg|sector_group, esg_grouped)
-summary(mm)
-# geom_smooth(method='lm', formula= revenue_growth~esg)
+
+
 groups <- unique(esg_grouped$sector_group)
-coefs <- coef(mm)
-coefs
 
-# multiple regression by sector group 
-mm2 <- lmList(log(revenue_growth) ~ log(esg)|sector_group, esg_grouped)
-summary(mm2)
 
-# coeffs <- coefficients(revenue_growth~esg|sector_group, data = esg_grouped)
-# coeffs
-mm <- lmList(revenue_growth~esg|sector_group, esg_grouped)
+
+# extract coefficients and p-values for each regression, put into array for table output
+
 reg_stats <- array(NA, dim=c(6,4))
 
 for (k in 1:length(groups)) {
@@ -209,10 +188,16 @@ reg_stats[6,1] <- 'All Groups'
 reg_stats[6, 2] <- (summary(mod)$coeff)['esg', 'Estimate']
 reg_stats[6, 3] <- (summary(mod)$coeff)['esg', 'Pr(>|t|)']
 
+# convert coeffs. and p-values to data frame, rename variables
+
 regression <- as.data.frame(reg_stats) %>%
   mutate('p-value' = as.numeric(V3), 'Coeff. Estimate' = as.numeric(V2)) %>%
   select('Sector Group' = V1, 'Coeff. Estimate', 'p-value')
-regression
+
+# write out as csv (so this doesn't have to be done in index.rmd)
+write.csv(regression, 'regression_data.csv')
+
+# table output for regression results
 
 kable(regression, digits = 4, row.names = FALSE,
       caption = 'Linear Regression: ESG Score Predicting Revenue Growth (Revenue Growth ~ ESG)') %>%
